@@ -20,4 +20,4 @@ npm install
 node server.js
 ```
 
-4. Access the website via an internet browser. The default address is 'your_ip:8080'.
+4. Access the website via internet browser. The default address is 'your_ip:8080'.
