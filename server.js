@@ -19,13 +19,18 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-app.use(express.static(path.join(__dirname, 'assets')));
+
+app.use(express.static('static'));
 
 app.get('/', function(req, res) {
   // Homepage
   res.sendFile(path.join(__dirname + '/index.html'));
 })
 
+app.get('/dev/', function(req, res) {
+  // Development page
+  res.sendFile(path.join(__dirname + '/dev.html'));
+})
 
 app.post('/api/update/', function(req, res) {
   //Send latest crawler information to client

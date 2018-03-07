@@ -1,0 +1,28 @@
+#centervid {
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#rightalign {
+    position: absolute;
+    margin: auto;
+    top: 126%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+#topcenter{
+	position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+html body {
+    background-color: rgba(80, 66, 244,1.00);
+
+}
