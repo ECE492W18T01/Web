@@ -1,3 +1,13 @@
+/** Server
+ *
+ * Smart Tank Web application.
+ *
+ * Future Development:
+ * - Update front end with latest crawler information.
+ * - Specify camera feed resolution (optional).
+ * - Add user authentication (optional).
+ */
+
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -11,13 +21,14 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(express.static(path.join(__dirname, 'assets')));
 
-//Homepage
 app.get('/', function(req, res) {
+  // Homepage
   res.sendFile(path.join(__dirname + '/index.html'));
 })
 
-//Update crawler information
-app.post('/api/update', function(req, res) {
+
+app.post('/api/update/', function(req, res) {
+  //Send latest crawler information to client
   crawler = req.body.crawler;
   res.send('Success');
 })
