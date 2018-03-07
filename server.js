@@ -23,17 +23,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(express.static('static'));
 
 app.get('/', function(req, res) {
-  // Homepage
+  /** Homepage */
   res.sendFile(path.join(__dirname + '/index.html'));
 })
 
-app.get('/dev/', function(req, res) {
-  // Development page
-  res.sendFile(path.join(__dirname + '/dev.html'));
-})
-
 app.post('/api/update/', function(req, res) {
-  //Send latest crawler information to client
+  /** Send latest crawler information to client */
   crawler = req.body.crawler;
   res.send('Success');
 })
