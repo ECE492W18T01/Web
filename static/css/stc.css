@@ -6,10 +6,10 @@
     transform: translate(-50%, -50%);
 }
 
-#rightalign {
+#group {
     position: absolute;
     margin: auto;
-    top: 126%;
+    top: 120%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -17,12 +17,40 @@
 
 #topcenter{
 	position: absolute;
+    top: -25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#videotext{
+	position: absolute;
     top: -10%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 html body {
-    background-color: rgba(80, 66, 244,1.00);
-
+    background:#4169E1;
 }
+
+#sonar{
+	position: absolute;
+    top: 10%;
+    left: 130%;
+    transform: translate(-50%, -50%);
+}
+
+#sonaroutput{
+	position: absolute;
+    top: 30%;
+    left: 130%;
+    transform: translate(-50%, -50%);
+}
+
+#batteryPosition{
+    position: absolute;
+    top: 100%;
+    left: -23%;
+    transform: translate(-50%, -50%);
+}
+
