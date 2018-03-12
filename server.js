@@ -13,7 +13,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 
-var PORT = 8080;
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -33,4 +32,8 @@ app.post('/api/update/', function(req, res) {
   res.send('Success');
 })
 
-app.listen(PORT, () => console.log('Example app listening on port: ', PORT));
+var port = process.env.PORT || 3000;
+
+var server = app.listen(port, function () {
+    console.log('Server running at http://127.0.0.1:' + port + '/');
+});
