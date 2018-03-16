@@ -42,8 +42,18 @@ function getCrawler(){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadyystatechange = function (){
 		if (this.readystate == 4 && this.stats ==200)
-			crawler = this.responseText;
+			crawler = Json.parse(this.responseText);
 			// later parse response text; and place values into vars.
+			// assuming the parse will be similar to '{"battery": "value", "FL": "value" .... 
+			// will change parse names to w.e later
+			BatteryResponse = crawler.battery
+			FLResponse = crawler.FL
+			FRResponse = crawler.FR
+			RLResponse = crawler.RL
+			RRREsponse = crawler.RR
+			sonarResponse = crawler.sonar
+			OfflineResponse = crawler.off
+
 
 	} 
 	xhttp.open("GET", "crawler.com/api/get-crawler", true);
