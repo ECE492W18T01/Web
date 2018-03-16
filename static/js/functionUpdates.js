@@ -26,45 +26,58 @@ ctx.stroke();
 // The the url in the httpRequest.open is the crawler.com/api/get-crawler? then grab reponse text or obj (will change to
 // which ever
 
-var ResponseTimer = setInterval(getCrawler, 1000);
 
-var crawler = "stuff"
-var BatteryResponse = 0; 
+
+var ResponseTimer = setInterval(getCrawler, 200);
+var batteryResponse = 0; 
 var FLResponse = 0;
 var FRResponse = 0;
 var RLResponse = 0;
-var RRREsponse = 0;
+var RRResponse = 0;
 var sonarResponse = 0 ;
-var OfflineResponse = 0; 
+var connectedResponse = 0; 
 
 function getCrawler(){
 
 	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			crawler = Json.parse(this.responseText);
+	xhttp.onreadystatechange = function (){
+		//might be this.readyState == 4 && this.status == 200 for the real thing.
+		//change to this.status for checking dummy test
+		if (this.readyState = 4 && this.status == 200)
+			
+			var crawler = JSON.parse(this.responseText);
 			// later parse response text; and place values into vars.
 			// assuming the parse will be similar to '{"battery": "value", "FL": "value" .... 
 			// will change parse names to w.e later
-			BatteryResponse = crawler.battery
-			FLResponse = crawler.FL
-			FRResponse = crawler.FR
-			RLResponse = crawler.RL
-			RRREsponse = crawler.RR
-			sonarResponse = crawler.sonar
-			OfflineResponse = crawler.off
+			batteryResponse = crawler.battery;
+			FLResponse = crawler.wheels.fl;
+			FRResponse = crawler.wheels.fr;
+			RLResponse = crawler.wheels.rl;
+			RRResponse = crawler.wheels.rr;
+			sonarResponse = crawler.sonar;
+			connectedResponse = crawler.connected;
+			 
+		}
 
 
-	} 
-	xhttp.open("GET", "crawler.com/api/get-crawler", true);
+	
+	xhttp.open("GET", "http://localhost:3000/api/status/", true);
 	xhttp.send();
 
 }
 
 
 
-// Figure out the variable outputs and convert that.
-// Variables below will the variables getting the output from the website *change later once confirmed with steven*
+var online = setInterval(connected, 1000);
+function connected(){
+	if (connectedResponse == 1){
+		document.getElementById("JSTRING").innerHTML = "connected";
+	}
+
+	else {
+		document.getElementById("JSTRING").innerHTML = "offline";
+	}
+}
 
 // Time function
 var myVar = setInterval(myTimer, 1000);
@@ -76,55 +89,92 @@ function myTimer() {
 
 
 // wheel function
-var wheelUpdate = setInterval(changeWheelStatus, 3000);
-var wheelStatus = 1;
+var wheelUpdate1 = setInterval(changeWheelStatus1, 500);
+var wheelUpdate2 = setInterval(changeWheelStatus2, 500);
+var wheelUpdate3 = setInterval(changeWheelStatus3, 500);
+var wheelUpdate4 = setInterval(changeWheelStatus4, 500);
 
-function changeWheelStatus(){
-    var div = $("wheel");
-    	if(wheelStatus == 1){
+
+
+function changeWheelStatus1(){
+    var div = $("fl");
+    	if(FLResponse == 1){
         div.animate({ backgroundColor: "#98bf21", },);
-        wheelStatus = 2;
    		}	
    		else{	
         div.animate({ backgroundColor: "#d9534f", },);
-        wheelStatus = 1;
+        }
+}
+
+function changeWheelStatus2(){
+    var div = $("fr");
+    	if(FRResponse == 1){
+        div.animate({ backgroundColor: "#98bf21", },);
+   		}	
+   		else{	
+        div.animate({ backgroundColor: "#d9534f", },);
+        }
+}
+
+function changeWheelStatus3(){
+    var div = $("rl");
+    	if(RLResponse == 1){
+        div.animate({ backgroundColor: "#98bf21", },);
+   		}	
+   		else{	
+        div.animate({ backgroundColor: "#d9534f", },);
+        }
+}
+
+function changeWheelStatus4(){
+    var div = $("rr");
+    	if(RRResponse == 1){
+        div.animate({ backgroundColor: "#98bf21", },);
+   		}	
+   		else{	
+        div.animate({ backgroundColor: "#d9534f", },);
         }
 }
 
 
 
 // sonar function
-var sonarUpdate = setInterval(sonarFunction, 3000);
-var sonarNumber = 1;
+var sonarUpdate = setInterval(sonarFunction, 1000);
 function sonarFunction() {
-    document.getElementById("sonarStatus").innerHTML = sonarNumber;
-    sonarNumber++;
+    document.getElementById("sonarStatus").innerHTML = sonarResponse.toString();
+  
 }
 
 
 //battery function
 
 var batteryUpdate = setInterval(batteryFunction, 1000);
-var batteryNumber  = 100;
-
-var OfflineFlag = 0;
 
 function batteryFunction(){
-	batteryNumber -= 10; ;
-	if(batteryNumber <= 80 && batteryNumber >60){
+	if(batteryResponse <= 80 && batteryResponse >60){
 		document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-3");
 	}
-	else if(batteryNumber <= 60 && batteryNumber >40 ){
+	else if(batteryResponse <= 60 && batteryResponse >40 ){
+		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
+			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
+			document.getElementById('batteryPosition').style.color = "#ffff00"		
+		}
 		document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
 		document.getElementById('batteryPosition').style.color = "#ffff00"
-		OfflineFlag = 1;
 	}
-	else if((batteryNumber <= 40 && batteryNumber >20) && OfflineFlag == 0 ){
-
+	else if(batteryResponse <= 40 && batteryResponse >20 ){
+        if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
+			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
+			document.getElementById('batteryPosition').style.color = "#ff0000"		
+		}
 		document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
 		document.getElementById('batteryPosition').style.color = "#ff0000"
 	}
-	else if(batteryNumber <= 20 && OfflineFlag == 0){
+	else if(batteryResponse <= 20 ){
+		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
+			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
+			document.getElementById('batteryPosition').style.color = "#000000"		
+		}
 		document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-0");
 		document.getElementById('batteryPosition').style.color = "#000000"
 	}
