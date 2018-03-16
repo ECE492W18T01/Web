@@ -26,7 +26,7 @@ ctx.stroke();
 // The the url in the httpRequest.open is the crawler.com/api/get-crawler? then grab reponse text or obj (will change to
 // which ever
 
-var ResponseTimer = setInterval(getBattery, 1000);
+var ResponseTimer = setInterval(getCrawler, 1000);
 
 var crawler = "stuff"
 var BatteryResponse = 0; 
