@@ -26,8 +26,6 @@ ctx.stroke();
 // The the url in the httpRequest.open is the crawler.com/api/get-crawler? then grab reponse text or obj (will change to
 // which ever
 
-//Just have extra functions which will be deleted or used depending on the how response works. 
-
 var ResponseTimer = setInterval(getBattery, 1000);
 
 var crawler = "stuff"
@@ -48,7 +46,7 @@ function getCrawler(){
 			// later parse response text; and place values into vars.
 
 	} 
-	xhttp.open("GET", "crawler.com/api/get-crawler", true;
+	xhttp.open("GET", "crawler.com/api/get-crawler", true);
 	xhttp.send();
 
 }
