@@ -30,6 +30,7 @@ ctx.stroke();
 
 var ResponseTimer = setInterval(getBattery, 1000);
 
+var crawler = "stuff"
 var BatteryResponse = 0; 
 var FLResponse = 0;
 var FRResponse = 0;
@@ -38,111 +39,21 @@ var RRREsponse = 0;
 var sonarResponse = 0 ;
 var OfflineResponse = 0; 
 
-/*
-//Once everything is confirmed....
-function getOutputs(){
-	getbattery();
-	getFL();
-	getFR();
-	getRL();
-	getRR();
-	getSonar();
-	getOffline();
-}*/
-
-// How to test url
-function getBattery(){
+function getCrawler(){
 
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadyystatechange = function (){
 		if (this.readystate == 4 && this.stats ==200)
-			BatteryResponse = this.responseText;
+			crawler = this.responseText;
+			// later parse response text; and place values into vars.
 
-	} // get info each different function has "crawler.com/api/get-X or everything will be received from response"
-	//xhttp.open("GET", "crawler.com/api/get-crawler", true;
+	} 
+	xhttp.open("GET", "crawler.com/api/get-crawler", true;
 	xhttp.send();
 
 }
 
-/*
-function getFL(){
 
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			FLResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=FL", true;
-	xhttp.send();
-
-}
-
-function getFR()
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			FRResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=FR", true;
-	xhttp.send();
-
-}
-
-function getRL(){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			RLResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=RL", true;
-	xhttp.send();
-
-}
-
-function getRR(){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			RRResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=RR", true;
-	xhttp.send();
-
-}
-
-function getSonar(){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			SonarResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=sonar", true;
-	xhttp.send();
-
-}
-
-function getOffline(){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadyystatechange = function (){
-		if (this.readystate == 4 && this.stats ==200)
-			OfflineResponse = this.responseText;
-
-	} // get info each different function has a different?=x 
-	xhttp.open("GET", "crawler.com/api/get-crawler?=offline", true;
-	xhttp.send();
-
-}
-*/
 
 // Figure out the variable outputs and convert that.
 // Variables below will the variables getting the output from the website *change later once confirmed with steven*
