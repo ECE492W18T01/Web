@@ -13,6 +13,17 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 
+var crawler = {
+  "connected": 0,
+  "motor": 0,
+  "wheels": {
+    "fl": 0,
+    "fr": 0,
+    "rl": 0,
+    "rr": 0
+  },
+}
+
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -27,10 +38,16 @@ app.get('/', function(req, res) {
 })
 
 app.post('/api/update/', function(req, res) {
-  /** Send latest crawler information to client */
+  /** Update latest crawler data */
   crawler = req.body.crawler;
-  res.send('Success');
+  res.sendStatus(200);
 })
+
+app.get('/api/status/', function(req, res) {
+  /** Return crawler information */
+  res.send(crawler);
+})
+
 
 var port = process.env.PORT || 3000;
 
