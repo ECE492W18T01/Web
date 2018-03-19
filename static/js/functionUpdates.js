@@ -29,6 +29,8 @@ ctx.stroke();
 
 
 var ResponseTimer = setInterval(getCrawler, 200);
+var servoResponse = 0;
+var breakResponse = 0;
 var batteryResponse = 0; 
 var FLResponse = 0;
 var FRResponse = 0;
@@ -56,6 +58,8 @@ function getCrawler(){
 			RRResponse = crawler.wheels.rr;
 			sonarResponse = crawler.sonar;
 			connectedResponse = crawler.connected;
+			servoResponse = crawler.servo;
+			breakResponse = crawler.break;
 			 
 		}
 
@@ -88,6 +92,37 @@ function myTimer() {
 }
 
 
+
+
+//servo function
+var updateMotor = setInterval(changeMotorStatus, 1000);
+
+var old = 0;
+function changeMotorStatus(){
+	var div1 = $("fl");	
+	var div2 = $("fr");
+
+	if(old != servoResponse){
+		if(servoResponse  == 1 ){
+			document.getElementById("fl").style.transform = "rotate("+20+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+20+"deg)";
+  		}
+
+    	else if(servoResponse == 0){
+			document.getElementById("fl").style.transform = "rotate("+0+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+0+"deg)";
+   		}
+
+    	else if(servoResponse == -1 ){
+			document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+-20+"deg)";	
+	    }
+    	old = servoResponse;
+	}
+
+}
+
+
 // wheel function
 var wheelUpdate1 = setInterval(changeWheelStatus1, 500);
 var wheelUpdate2 = setInterval(changeWheelStatus2, 500);
@@ -99,40 +134,40 @@ var wheelUpdate4 = setInterval(changeWheelStatus4, 500);
 function changeWheelStatus1(){
     var div = $("fl");
     	if(FLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 100, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 100, queue: false });
         }
 }
 
 function changeWheelStatus2(){
     var div = $("fr");
     	if(FRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
 function changeWheelStatus3(){
     var div = $("rl");
     	if(RLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
 function changeWheelStatus4(){
     var div = $("rr");
     	if(RRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
