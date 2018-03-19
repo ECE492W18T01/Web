@@ -54,10 +54,10 @@ html body {
     transform: translate(-50%, -50%);
 }
 
-#canvas{
+#breaking{
     position: absolute;
-    top: 80%;
-    left: 140%;
+    top: 60%;
+    left: 130%;
     transform: translate(-50%, -50%);
 
 }

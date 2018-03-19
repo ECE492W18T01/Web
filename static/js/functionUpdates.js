@@ -83,61 +83,29 @@ function connected(){
 	}
 }
 
-// Time function
+// Time function and Tells if breaking or moving
 var myVar = setInterval(myTimer, 1000);
-
+var state = 1;
 function myTimer() {
     var d = new Date();
+    
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
-}
 
-
-// FROM STACK OVERFLOW FOURMS https://stackoverflow.com/questions/20445357/canvas-rotate-circle-in-certain-speed-using-requestanimationframe
-var Canvas = document.getElementById("canvas");
-var ctx = Canvas.getContext("2d");
-    
-var startAngle = (2*Math.PI);
-var endAngle = (Math.PI*1.5);
-var currentAngle = 0;
-
-var oldTime = getTime();
-
-function getTime() {
-    return (new Date()).getTime();
-}
-
-    var raf = window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        window.oRequestAnimationFrame;
-    
-    function Update(){
-    	if (sonarResponse < 10 ){
-        	var newTime = getTime(),
-            	diff = newTime - oldTime;
+    if(sonarResponse < 10){
+        state = 0;
+        document.getElementById("break").innerHTML = "Break";
+        document.getElementsByClassName('fa fa-cog fa-spin')[0].classList.toggle("fa-spin");
         
-        	oldTime = newTime;
-        
-        	//Clears
-        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
-        
-        	//Drawing
-        	ctx.beginPath();                  
-        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
-        
-       		ctx.strokeStyle = "black";
-        	ctx.lineWidth = 20.0;
-        	ctx.stroke();
-        
-       	 	currentAngle += diff * 0.001;
-        
-        	currentAngle %= 2 * Math.PI;
-        
-        	
-        }
-        raf(Update);
     }
-    raf(Update);
+
+    else if(sonarResponse > 10 && state == 0){
+        state = 1;
+        document.getElementById("break").innerHTML = "Moving";
+        document.getElementsByClassName('fa fa-cog')[0].classList.toggle("fa-spin");
+      
+    }
+}
+
 
 
 
@@ -263,3 +231,77 @@ function batteryFunction(){
 }
 
 
+//maybe use probably not
+/*
+// FROM STACK OVERFLOW FOURMS https://stackoverflow.com/questions/20445357/canvas-rotate-circle-in-certain-speed-using-requestanimationframe
+// wheel moves 
+var Canvas = document.getElementById("canvas");
+var ctx = Canvas.getContext("2d");
+    
+var startAngle = (2*Math.PI);
+var endAngle = (Math.PI*1.5);
+var currentAngle = 0;
+
+var oldTime = getTime();
+
+function getTime() {
+    return (new Date()).getTime();
+}
+
+
+    var raf = window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.oRequestAnimationFrame;
+    
+//initial draw
+var newTime = getTime(),
+            	diff = newTime - oldTime;
+        
+        	oldTime = newTime;
+        
+        	//Clears
+        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
+        
+        	//Drawing
+        	ctx.beginPath();                  
+        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
+        
+       		ctx.strokeStyle = "black";
+        	ctx.lineWidth = 20.0;	
+        	ctx.stroke();
+        
+       	 	currentAngle += diff * 0.001 ;
+        
+        	currentAngle %= 2 * Math.PI;
+
+    function Update(){
+    	if (sonarResponse > 10){
+        	var newTime = getTime(),
+            	diff = newTime - oldTime;
+        
+        	oldTime = newTime;
+        
+        	//Clears
+        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
+        
+        	//Drawing
+        	ctx.beginPath();                  
+        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
+        
+       		ctx.strokeStyle = "black";
+        	ctx.lineWidth = 20.0;	
+        	ctx.stroke();
+        
+       	 	currentAngle += diff * 0.001 ;
+        
+        	currentAngle %= 2 * Math.PI;
+        
+        	
+        }
+       
+        raf(Update);
+    }
+    raf(Update);
+
+*/
