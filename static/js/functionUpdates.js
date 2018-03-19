@@ -92,6 +92,54 @@ function myTimer() {
 }
 
 
+// FROM STACK OVERFLOW FOURMS https://stackoverflow.com/questions/20445357/canvas-rotate-circle-in-certain-speed-using-requestanimationframe
+var Canvas = document.getElementById("canvas");
+var ctx = Canvas.getContext("2d");
+    
+var startAngle = (2*Math.PI);
+var endAngle = (Math.PI*1.5);
+var currentAngle = 0;
+
+var oldTime = getTime();
+
+function getTime() {
+    return (new Date()).getTime();
+}
+
+    var raf = window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.oRequestAnimationFrame;
+    
+    function Update(){
+    	if (sonarResponse < 10 ){
+        	var newTime = getTime(),
+            	diff = newTime - oldTime;
+        
+        	oldTime = newTime;
+        
+        	//Clears
+        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
+        
+        	//Drawing
+        	ctx.beginPath();                  
+        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
+        
+       		ctx.strokeStyle = "black";
+        	ctx.lineWidth = 20.0;
+        	ctx.stroke();
+        
+       	 	currentAngle += diff * 0.001;
+        
+        	currentAngle %= 2 * Math.PI;
+        
+        	
+        }
+        raf(Update);
+    }
+    raf(Update);
+
+
 
 
 //servo function
@@ -99,8 +147,6 @@ var updateMotor = setInterval(changeMotorStatus, 1000);
 
 var old = 0;
 function changeMotorStatus(){
-	var div1 = $("fl");	
-	var div2 = $("fr");
 
 	if(old != servoResponse){
 		if(servoResponse  == 1 ){
