@@ -70,5 +70,18 @@ html body {
 
 }
 
+#log{
+    position: absolute;;
+    top: 97%;
+    left: 105%;
+    transform:translate(-50%, -50%);       
+}
+
+#loginfo{
+    position: absolute;;
+    top: 115%;
+    left: 130%;
+    transform:translate(-50%, -50%);
+}
 
 

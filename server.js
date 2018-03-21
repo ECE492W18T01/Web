@@ -17,13 +17,13 @@ var crawler = {
   "connected": 1,
   "servo": 1,
   "break": 0,
-  "battery" : 50,
-  "sonar": 12,
+  "battery" : 0,
+  "sonar": 8,
   "wheels": {
     "fl": 0,
-    "fr": 0,
+    "fr": 1,
     "rl": 0,
-    "rr": 0
+    "rr": 1
   },
 }
 

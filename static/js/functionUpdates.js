@@ -85,7 +85,7 @@ function connected(){
 
 // Time function and Tells if breaking or moving
 var myVar = setInterval(myTimer, 1000);
-var state = 1;
+var state = 0;
 function myTimer() {
     var d = new Date();
     
