@@ -15,7 +15,7 @@ var app = express();
 
 var crawler = {
   "connected": 1,
-  "commands": "new to this to the box",
+  "commands": "lol to this to the box",
   "servo": 1,
   "break": 0,
   "battery" : 0,

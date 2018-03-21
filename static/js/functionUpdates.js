@@ -74,16 +74,19 @@ function getCrawler(){
 
 
 // Time function and Tells if breaking or moving
-var myVar = setInterval(myTimer, 1000);
+var myVar = setInterval(myTimer, 500);
 var state = 1;
+var oldCommand = "";
 function myTimer() {
     var d = new Date();
     
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
 
-    document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
-    document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight
-
+    if(commandsResponse != oldCommand){
+        document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
+        document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight
+        oldCommand = commandsResponse;
+    }   
 
      if (connectedResponse == 1){
         document.getElementById("JSTRING").innerHTML = "connected";
