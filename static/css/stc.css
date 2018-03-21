@@ -17,7 +17,7 @@
 
 #topcenter{
 	position: absolute;
-    top: -21%;
+    top: -25%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -42,9 +42,17 @@ html body {
 
 #sonaroutput{
 	position: absolute;
-    top: 30%;
+    top: 20%;
     left: 130%;
     transform: translate(-50%, -50%);
+}
+
+#connection{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 #batteryPosition{
@@ -64,7 +72,7 @@ html body {
 
 #break{    
     position: absolute;
-    top: 90%;
+    top: 80%;
     left: 130%;
     transform: translate(-50%, -50%);
 
@@ -72,7 +80,7 @@ html body {
 
 #log{
     position: absolute;;
-    top: 97%;
+    top: 95%;
     left: 105%;
     transform:translate(-50%, -50%);       
 }
@@ -83,5 +91,4 @@ html body {
     left: 130%;
     transform:translate(-50%, -50%);
 }
-
 

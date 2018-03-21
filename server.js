@@ -18,8 +18,8 @@ var crawler = {
   "commands": "lol to this to the box",
   "servo": 1,
   "break": 0,
-  "battery" : 20,
-  "sonar": 12,
+  "battery" : 40,
+  "sonar": 8,
   "wheels": {
     "fl": 0,
     "fr": 1,
