@@ -84,7 +84,7 @@ function myTimer() {
 
     if(commandsResponse != oldCommand){
         document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
-        document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight
+        document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight;
         oldCommand = commandsResponse;
     }   
 
