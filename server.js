@@ -18,7 +18,7 @@ var crawler = {
   "commands": "lol to this to the box",
   "servo": 1,
   "break": 0,
-  "battery" : 0,
+  "battery" : 20,
   "sonar": 12,
   "wheels": {
     "fl": 0,

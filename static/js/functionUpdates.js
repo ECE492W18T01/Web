@@ -73,7 +73,7 @@ function getCrawler(){
 }
 
 
-// Time function and Tells if breaking or moving
+// Time function, connection, command log, moving or breaking
 var myVar = setInterval(myTimer, 500);
 var state = 1;
 var oldCommand = "";
@@ -208,106 +208,44 @@ var batteryUpdate = setInterval(batteryFunction, 1000);
 function batteryFunction(){
 	if(batteryResponse <= 80 && batteryResponse >60){
 		document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-3");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-3");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-3");    
+        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-3");
+        document.getElementById('batteryPosition').style.color = "green"
+
 	}
 	else if(batteryResponse <= 60 && batteryResponse >40 ){
-		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
-			document.getElementById('batteryPosition').style.color = "#ffff00"		
-		}
-		document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
+	    document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-2");    
+		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-2");
 		document.getElementById('batteryPosition').style.color = "#ffff00"
 	}
 	else if(batteryResponse <= 40 && batteryResponse >20 ){
-        if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
-			document.getElementById('batteryPosition').style.color = "#ff0000"		
-		}
-		document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
+		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-1");
 		document.getElementById('batteryPosition').style.color = "#ff0000"
 	}
+    // To be cautious: 
+    // made it look zero even at 20% because we should turn it off and charge it to avoid any problems.    
 	else if(batteryResponse <= 20 ){
-		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
-			document.getElementById('batteryPosition').style.color = "#000000"		
-		}
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-0");
+	    document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-0");
 		document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-0");
 		document.getElementById('batteryPosition').style.color = "#000000"
 	}
-
-}
-
-
-//maybe use probably not
-/*
-// FROM STACK OVERFLOW FOURMS https://stackoverflow.com/questions/20445357/canvas-rotate-circle-in-certain-speed-using-requestanimationframe
-// wheel moves 
-var Canvas = document.getElementById("canvas");
-var ctx = Canvas.getContext("2d");
-    
-var startAngle = (2*Math.PI);
-var endAngle = (Math.PI*1.5);
-var currentAngle = 0;
-
-var oldTime = getTime();
-
-function getTime() {
-    return (new Date()).getTime();
-}
-
-
-    var raf = window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        window.oRequestAnimationFrame;
-    
-//initial draw
-var newTime = getTime(),
-            	diff = newTime - oldTime;
-        
-        	oldTime = newTime;
-        
-        	//Clears
-        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
-        
-        	//Drawing
-        	ctx.beginPath();                  
-        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
-        
-       		ctx.strokeStyle = "black";
-        	ctx.lineWidth = 20.0;	
-        	ctx.stroke();
-        
-       	 	currentAngle += diff * 0.001 ;
-        
-        	currentAngle %= 2 * Math.PI;
-
-    function Update(){
-    	if (sonarResponse > 10){
-        	var newTime = getTime(),
-            	diff = newTime - oldTime;
-        
-        	oldTime = newTime;
-        
-        	//Clears
-        	ctx.clearRect(0,0,Canvas.width,Canvas.height);
-        
-        	//Drawing
-        	ctx.beginPath();                  
-        	ctx.arc(40, 40, 30, startAngle + currentAngle, endAngle + currentAngle, false);
-        
-       		ctx.strokeStyle = "black";
-        	ctx.lineWidth = 20.0;	
-        	ctx.stroke();
-        
-       	 	currentAngle += diff * 0.001 ;
-        
-        	currentAngle %= 2 * Math.PI;
-        
-        	
-        }
-       
-        raf(Update);
+    else if(batteryResponse > 80 ){
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-4");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-4");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-4");    
+        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-4");
+        document.getElementById('batteryPosition').style.color = "green"
     }
-    raf(Update);
 
-*/
+}
+
+
+
