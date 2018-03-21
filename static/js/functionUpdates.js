@@ -73,22 +73,26 @@ function getCrawler(){
 }
 
 
-
 // Time function and Tells if breaking or moving
 var myVar = setInterval(myTimer, 1000);
-var state = 0;
+var state = 1;
 function myTimer() {
     var d = new Date();
     
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
 
-    if (connectedResponse == 1){
+    document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
+    document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight
+
+
+     if (connectedResponse == 1){
         document.getElementById("JSTRING").innerHTML = "connected";
     }
 
     else {
         document.getElementById("JSTRING").innerHTML = "offline";
     }
+
 
     if(sonarResponse < 10){
         state = 0;
