@@ -38,6 +38,7 @@ var RLResponse = 0;
 var RRResponse = 0;
 var sonarResponse = 0 ;
 var connectedResponse = 0; 
+var commandsResponse = "";
 
 function getCrawler(){
 
@@ -60,6 +61,7 @@ function getCrawler(){
 			connectedResponse = crawler.connected;
 			servoResponse = crawler.servo;
 			breakResponse = crawler.break;
+            commandsResponse = crawler.commands;
 			 
 		}
 
@@ -72,17 +74,6 @@ function getCrawler(){
 
 
 
-var online = setInterval(connected, 1000);
-function connected(){
-	if (connectedResponse == 1){
-		document.getElementById("JSTRING").innerHTML = "connected";
-	}
-
-	else {
-		document.getElementById("JSTRING").innerHTML = "offline";
-	}
-}
-
 // Time function and Tells if breaking or moving
 var myVar = setInterval(myTimer, 1000);
 var state = 0;
@@ -90,6 +81,14 @@ function myTimer() {
     var d = new Date();
     
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
+
+    if (connectedResponse == 1){
+        document.getElementById("JSTRING").innerHTML = "connected";
+    }
+
+    else {
+        document.getElementById("JSTRING").innerHTML = "offline";
+    }
 
     if(sonarResponse < 10){
         state = 0;
