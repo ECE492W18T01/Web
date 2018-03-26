@@ -15,14 +15,16 @@ var app = express();
 
 var crawler = {
   "connected": 1,
-  "motor": 2,
-  "battery" : 30,
-  "sonar": 60,
+  "commands": "lol to this to the box",
+  "servo": 1,
+  "break": 0,
+  "battery" : 40,
+  "sonar": 8,
   "wheels": {
-    "fl": 1,
-    "fr": 0,
-    "rl": 1,
-    "rr": 0
+    "fl": 0,
+    "fr": 1,
+    "rl": 0,
+    "rr": 1
   },
 }
 

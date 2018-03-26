@@ -29,6 +29,8 @@ ctx.stroke();
 
 
 var ResponseTimer = setInterval(getCrawler, 200);
+var servoResponse = 0;
+var breakResponse = 0;
 var batteryResponse = 0; 
 var FLResponse = 0;
 var FRResponse = 0;
@@ -36,6 +38,7 @@ var RLResponse = 0;
 var RRResponse = 0;
 var sonarResponse = 0 ;
 var connectedResponse = 0; 
+var commandsResponse = "";
 
 function getCrawler(){
 
@@ -56,6 +59,9 @@ function getCrawler(){
 			RRResponse = crawler.wheels.rr;
 			sonarResponse = crawler.sonar;
 			connectedResponse = crawler.connected;
+			servoResponse = crawler.servo;
+			breakResponse = crawler.break;
+            commandsResponse = crawler.commands;
 			 
 		}
 
@@ -67,24 +73,73 @@ function getCrawler(){
 }
 
 
-
-var online = setInterval(connected, 1000);
-function connected(){
-	if (connectedResponse == 1){
-		document.getElementById("JSTRING").innerHTML = "connected";
-	}
-
-	else {
-		document.getElementById("JSTRING").innerHTML = "offline";
-	}
-}
-
-// Time function
-var myVar = setInterval(myTimer, 1000);
-
+// Time function, connection, command log, moving or breaking
+var myVar = setInterval(myTimer, 500);
+var state = 1;
+var oldCommand = "";
 function myTimer() {
     var d = new Date();
+    
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
+
+    if(commandsResponse != oldCommand){
+        document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
+        document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight;
+        oldCommand = commandsResponse;
+    }   
+
+     if (connectedResponse == 1){
+        document.getElementById("JSTRING").innerHTML = "connected";
+    }
+
+    else {
+        document.getElementById("JSTRING").innerHTML = "offline";
+    }
+
+
+    if(sonarResponse < 10){
+        state = 0;
+        document.getElementById("break").innerHTML = "Break";
+        document.getElementsByClassName('fa fa-cog fa-spin')[0].classList.toggle("fa-spin");
+        
+    }
+
+    else if(sonarResponse > 10 && state == 0){
+        state = 1;
+        document.getElementById("break").innerHTML = "Moving";
+        document.getElementsByClassName('fa fa-cog')[0].classList.toggle("fa-spin");
+      
+    }
+}
+
+
+
+
+
+//servo function
+var updateMotor = setInterval(changeMotorStatus, 1000);
+
+var old = 0;
+function changeMotorStatus(){
+
+	if(old != servoResponse){
+		if(servoResponse  == 1 ){
+			document.getElementById("fl").style.transform = "rotate("+20+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+20+"deg)";
+  		}
+
+    	else if(servoResponse == 0){
+			document.getElementById("fl").style.transform = "rotate("+0+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+0+"deg)";
+   		}
+
+    	else if(servoResponse == -1 ){
+			document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
+			document.getElementById("fr").style.transform = "rotate("+-20+"deg)";	
+	    }
+    	old = servoResponse;
+	}
+
 }
 
 
@@ -99,40 +154,40 @@ var wheelUpdate4 = setInterval(changeWheelStatus4, 500);
 function changeWheelStatus1(){
     var div = $("fl");
     	if(FLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 100, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 100, queue: false });
         }
 }
 
 function changeWheelStatus2(){
     var div = $("fr");
     	if(FRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
 function changeWheelStatus3(){
     var div = $("rl");
     	if(RLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
 function changeWheelStatus4(){
     var div = $("rr");
     	if(RRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },);
+        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
    		}	
    		else{	
-        div.animate({ backgroundColor: "#d9534f", },);
+        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
         }
 }
 
@@ -153,32 +208,44 @@ var batteryUpdate = setInterval(batteryFunction, 1000);
 function batteryFunction(){
 	if(batteryResponse <= 80 && batteryResponse >60){
 		document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-3");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-3");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-3");    
+        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-3");
+        document.getElementById('batteryPosition').style.color = "green"
+
 	}
 	else if(batteryResponse <= 60 && batteryResponse >40 ){
-		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
-			document.getElementById('batteryPosition').style.color = "#ffff00"		
-		}
-		document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
+	    document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-2");    
+		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-2");
 		document.getElementById('batteryPosition').style.color = "#ffff00"
 	}
 	else if(batteryResponse <= 40 && batteryResponse >20 ){
-        if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
-			document.getElementById('batteryPosition').style.color = "#ff0000"		
-		}
-		document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-1");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
+		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-1");
 		document.getElementById('batteryPosition').style.color = "#ff0000"
 	}
+    // To be cautious: 
+    // made it look zero even at 20% because we should turn it off and charge it to avoid any problems.    
 	else if(batteryResponse <= 20 ){
-		if (document.getElementById('batteryPosition').classList.contains("fa-battery-4")){
-			document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
-			document.getElementById('batteryPosition').style.color = "#000000"		
-		}
+        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-0");
+	    document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-0");
 		document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-0");
 		document.getElementById('batteryPosition').style.color = "#000000"
 	}
+    else if(batteryResponse > 80 ){
+        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-4");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-4");
+        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-4");    
+        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-4");
+        document.getElementById('batteryPosition').style.color = "green"
+    }
 
 }
+
 
 
