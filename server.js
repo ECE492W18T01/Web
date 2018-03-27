@@ -17,7 +17,7 @@ var crawler = {
   "connected": 1,
   "commands": "lol to this to the box",
   "servo": 1,
-  "break": 0,
+  "brake": 0,
   "battery" : 40,
   "sonar": 8,
   "wheels": {
@@ -25,7 +25,7 @@ var crawler = {
     "fr": 1,
     "rl": 0,
     "rr": 1
-  },
+  }
 }
 
 
@@ -49,7 +49,7 @@ app.post('/api/update/', function(req, res) {
 
 app.get('/api/status/', function(req, res) {
   /** Return crawler information */
-  res.send(crawler);
+  res.send(JSON.stringify(crawler));
 })
 
 
