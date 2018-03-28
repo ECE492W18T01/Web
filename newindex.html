@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>STC</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/stc.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<style>
+* {
+  box-sizing: border-box;
+}
+.menu {
+  float:left;
+  width:20%;
+  text-align:center;
+}
+.menu a {
+  background-color:#e5e5e5;
+  padding:30px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:black;
+}
+
+.menu canvas{
+  background-color:#e5e5e5;
+  padding:30px;
+  height:300px;
+  margin-top:7px;
+  display:block;
+  width:100%;
+  color:black;
+
+}
+
+.main {
+  text-align:center;
+  float:left;
+  width:60%;
+  padding:20px;
+}
+.right {
+  background-color:#e5e5e5;
+  float:left;
+  width:20%;
+  padding:35px;
+  margin-top:7px;
+  text-align:center;
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
+    width:100%;
+  }
+}
+.subleft {
+  float:left;
+  width:20%;
+  text-align:center;
+}
+
+
+</style>
+</head>
+<body style="font-family:Verdana;color:#aaaaaa;background-color:blue">
+
+<div style="background-color:#e5e5e5;padding:15px;text-align:center;">
+  <h1>Hello World</h1>
+  <p class="">What happens if i add this</p>
+</div>
+
+<div style="overflow:hidden" >
+  <div class="menu">
+    <a >Wheel status</a>
+    <canvas id="drawlines"></canvas>
+  </div>
+
+  <div class="main">
+    <iframe id="feed" src=“http://172.20.138.44:8080/stream.mjpg” type="video/mp4" width="560" height="360" style="padding:1px;border:1px solid black;"></iframe>
+    <div id="group"><img src="/images/picture.jpg" height="155" width="560" style="width:100%"></div>
+  </div>
+
+  <div class="right">
+   <h2> about</h2>
+  </div>
+
+</div>
+
+
+
+</body>
+</html>

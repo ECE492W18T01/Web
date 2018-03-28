@@ -22,6 +22,11 @@
     transform: translate(-50%, -50%);
 }
 
+.secondary{
+    background: white;
+    z-index: :100;
+}
+
 #videotext{
 	position: absolute;
     top: -10%;
@@ -56,6 +61,13 @@ html body {
 }
 
 #batteryPosition{
+    position: absolute;
+    top: 100%;
+    left: -23%;
+    transform: translate(-50%, -50%);
+}
+
+#batteryPosition2{
     position: absolute;
     top: 100%;
     left: -23%;

@@ -14,17 +14,17 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var crawler = {
-  "connected": 1,
-  "commands": "lol to this to the box",
-  "servo": 1,
+  "connected": 0,
+  "commands": "a to this to the box",
+  "servo": -1,
   "break": 0,
-  "battery" : 40,
-  "sonar": 8,
+  "battery" : 70,
+  "sonar": 12 ,
   "wheels": {
-    "fl": 0,
+    "fl": 1,
     "fr": 1,
-    "rl": 0,
-    "rr": 1
+    "rl": 1,
+    "rr": 1 
   },
 }
 
