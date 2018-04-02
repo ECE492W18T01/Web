@@ -1,3 +1,8 @@
+.notConnectedImage{
+    background:url(/images/UofA.jpg) center;
+    background-size: 560px 360;
+}
+
 #centervid {
     position: absolute;
     margin: auto;

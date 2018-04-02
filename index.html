@@ -33,8 +33,8 @@
 	<rl style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -40%;"></rl>
 	<rr style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -17.7%;"></rr>
 
-	<button id="batteryPosition" type="button" class="btn btn-warning" OnClick="ResponseTimer = setInterval(getCrawler, 1000), SwitchButtons('batteryPosition');">Request for data!</button>
-	<button id="batteryPosition2" type="button" class="btn btn-warning" OnClick="clearInterval(ResponseTimer), SwitchButtons('batteryPosition2')"" style="display:none;">Stop Requesting</button>
+	<button id="batteryPosition" type="button" class="btn btn-success" OnClick="ResponseTimer = setInterval(getCrawler, 1000), SwitchButtons('batteryPosition');">Request for data!</button>
+	<button id="batteryPosition2" type="button" class="btn btn-danger" OnClick="clearInterval(ResponseTimer), SwitchButtons('batteryPosition2')"" style="display:none;">Stop Requesting</button>
 
 
 
@@ -47,7 +47,7 @@
 	<div id="loginfo" style="height:120px;width:325px;background-color:white; ;border:1px solid black;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 	</div>
 
-		<iframe id="feed" src=“http://172.20.138.44:8080/stream.mjpg” type="video/mp4" width="560" height="360" style="padding:1px;border:1px solid black;"></iframe>
+		<div id="feed" class="notConnectedImage"><iframe src=“http://172.20.138.44:8080/stream.mjpg” type="video/mp4" width="560" height="360" style="padding:1px;border:1px solid black;"></iframe></div>
 	<div id="group"><img src="/images/picture.jpg" height="155" width="560"></div>
 	</div>
 </div>
