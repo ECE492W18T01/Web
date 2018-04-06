@@ -34,26 +34,14 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-app.use(express.static('static'));
+app.use(express.static('.'));
 
 app.get('/', function(req, res) {
   /** Homepage */
   res.sendFile(path.join(__dirname + '/index.html'));
 })
 
-app.post('/api/update/', function(req, res) {
-  /** Update latest crawler data */
-  crawler = req.body.crawler;
-  res.sendStatus(200);
-})
-
-app.get('/api/status/', function(req, res) {
-  /** Return crawler information */
-  res.send(JSON.stringify(crawler));
-})
-
-
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
 var server = app.listen(port, function () {
     console.log('Server running at http://127.0.0.1:' + port + '/');
