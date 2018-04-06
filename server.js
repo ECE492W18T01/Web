@@ -21,11 +21,11 @@ var crawler = {
   "battery" : 40,
   "sonar": 8,
   "wheels": {
-    "fl": 0,
+    "fl": 1,
     "fr": 1,
-    "rl": 0,
+    "rl": 1,
     "rr": 1
-  }
+  },
 }
 
 

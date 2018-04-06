@@ -26,9 +26,9 @@ ctx.stroke();
 // The the url in the httpRequest.open is the crawler.com/api/get-crawler? then grab reponse text or obj (will change to
 // which ever
 
+//TODO make a button toggle to ask for
 
-var statusPollFrequency = 10000;
-var ResponseTimer = setInterval(getCrawler, statusPollFrequency);
+//var ResponseTimer = setInterval(getCrawler, 1000);
 var servoResponse = 0;
 var breakResponse = 0;
 var batteryResponse = 0;
@@ -69,8 +69,28 @@ function getCrawler(){
 
 	xhttp.open("GET", "http://localhost:3000/api/status/", true);
 	xhttp.send();
+}
+
+//Toggle the buttons to show, To see if we need to request or if we want to stop requesting
+function SwitchButtons(buttonId) {
+  var hideBtn, showBtn, menuToggle;
+  if (buttonId == 'batteryPosition') {
+    menuToggle = 'menu2';
+    showBtn = 'batteryPosition2';
+    hideBtn = 'batteryPosition';
+  } else {
+    menuToggle = 'menu3';
+    showBtn = 'batteryPosition';
+    hideBtn = 'batteryPosition2';
+  }
+  //I don't have your menus, so this is commented out.  just uncomment for your usage
+  // document.getElementById(menuToggle).toggle(); //step 1: toggle menu
+  document.getElementById(hideBtn).style.display = 'none'; //step 2 :additional feature hide button
+  document.getElementById(showBtn).style.display = ''; //step 3:additional feature show button
+
 
 }
+
 
 
 // Time function, connection, command log, moving or breaking
@@ -99,7 +119,7 @@ function myTimer() {
 
     if(sonarResponse < 10){
         state = 0;
-        document.getElementById("break").innerHTML = "Break";
+        document.getElementById("break").innerHTML = "Brake";
         document.getElementsByClassName('fa fa-cog fa-spin')[0].classList.toggle("fa-spin");
 
     }
@@ -202,9 +222,9 @@ function sonarFunction() {
 
 
 //battery function
-
+/*
 var batteryUpdate = setInterval(batteryFunction, 1000);
-
+<i id="batteryPosition" class="fa fa-battery-4" style="font-size:80px;color:green;"></i>
 function batteryFunction(){
 	if(batteryResponse <= 80 && batteryResponse >60){
 		document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-3");
@@ -245,4 +265,4 @@ function batteryFunction(){
         document.getElementById('batteryPosition').style.color = "green"
     }
 
-}
+}*/

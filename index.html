@@ -25,28 +25,31 @@
 	<p id="JSTRING" style="color:white;">Offline</p>
 </div>
 
-<canvas id="drawlines" style="background:#4169E1;height:300px;width:200px;position:absolute; top: 0%;left: -40%;"></canvas>
-<fl id ="fl" style="background:#98bf21;height:75px;width:75px;position:absolute; top: 0%;left: -40%;"></fl>
-<fr id ="fr" style="background:#98bf21;height:75px;width:75px;position:absolute; top: 0%;left: -17.7%;"></fr>
-<rl style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -40%;"></rl>
-<rr style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -17.7%;"></rr>
 
-<i id="batteryPosition" class="fa fa-battery-4" style="font-size:80px;color:green;"></i>
+<div class="secondary" >
+	<canvas id="drawlines" style="background:#4169E1;height:300px;width:200px;position:absolute; top: 0%;left: -40%;"></canvas>
+	<fl id ="fl" style="background:#98bf21;height:75px;width:75px;position:absolute; top: 0%;left: -40%;"></fl>
+	<fr id ="fr" style="background:#98bf21;height:75px;width:75px;position:absolute; top: 0%;left: -17.7%;"></fr>
+	<rl style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -40%;"></rl>
+	<rr style="background:#98bf21;height:75px;width:75px;position:absolute; top: 61.4%;left: -17.7%;"></rr>
+
+	<button id="batteryPosition" type="button" class="btn btn-success" OnClick="ResponseTimer = setInterval(getCrawler, 1000), SwitchButtons('batteryPosition');">Request for data!</button>
+	<button id="batteryPosition2" type="button" class="btn btn-danger" OnClick="clearInterval(ResponseTimer), SwitchButtons('batteryPosition2')"" style="display:none;">Stop Requesting</button>
 
 
 
 	<div id="videotext"><h2 style="color:LimeGreen">Video Feed</h2></div>
 	<div id="sonar"><h2 style="color:Black">Sonar:</h2></div>
 	<div id="sonaroutput"><h2 id = "sonarStatus"; style="color:Black"></h2></div>
-	<div id = "breaking"><i class="fa fa-cog fa-spin" style="font-size:100px;"></i></div>
-	<h2 id = "break">Moving </h2>	
-	<div id ="log">Log</div>
-	<div id= "loginfo" style="height:120px;width:325px;background-color:white; ;border:1px solid black;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+	<div id ="breaking"><i class="fa fa-cog fa-spin" style="font-size:100px;"></i></div>
+	<h2 id="break">Moving </h2>	
+	<div id="log">Log</div>
+	<div id="loginfo" style="height:120px;width:325px;background-color:white; ;border:1px solid black;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 	</div>
 
-  	<iframe id="feed" src=“http://172.20.138.44:8080/stream.mjpg” type="video/mp4" width="560" height="360" style="padding:1px;border:1px solid black;"></iframe>
+		<div id="feed" class="notConnectedImage"><iframe src=“http://172.20.138.44:8080/stream.mjpg” type="video/mp4" width="560" height="360" style="padding:1px;border:1px solid black;"></iframe></div>
 	<div id="group"><img src="/images/picture.jpg" height="155" width="560"></div>
-
+	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>

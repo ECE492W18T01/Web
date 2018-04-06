@@ -1,3 +1,8 @@
+.notConnectedImage{
+    background:url(/images/UofA.jpg) center;
+    background-size: 560px 360;
+}
+
 #centervid {
     position: absolute;
     margin: auto;
@@ -20,6 +25,11 @@
     top: -25%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.secondary{
+    background: white;
+    z-index: :100;
 }
 
 #videotext{
@@ -56,6 +66,13 @@ html body {
 }
 
 #batteryPosition{
+    position: absolute;
+    top: 100%;
+    left: -23%;
+    transform: translate(-50%, -50%);
+}
+
+#batteryPosition2{
     position: absolute;
     top: 100%;
     left: -23%;
