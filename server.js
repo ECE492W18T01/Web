@@ -19,7 +19,7 @@ var crawler = {
   "servo": -1,
   "break": 0,
   "battery" : 70,
-  "sonar": 12 ,
+  "sonar": 8 ,
   "wheels": {
     "fl": 1,
     "fr": 1,

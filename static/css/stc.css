@@ -1,24 +1,29 @@
-.notConnectedImage{
-    background:url(/images/UofA.jpg) center;
-    background-size: 560px 360;
+html body {
+    background:#2B823A;
 }
 
-#centervid {
+.container{
+  background:#10621E ;
+}
+
+#title {
+  color:#B9F0B9;
+}
+
+#time {
+   position:absolute;
+   color:#B9F0B9;
+   top:80%;
+   left:90%;
+}
+
+#connectivity {
+    color:#B9F0B9;
     position: absolute;
-    margin: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-#group {
-    position: absolute;
-    margin: auto;
-    top: 120%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 
 #topcenter{
 	position: absolute;
@@ -32,80 +37,150 @@
     z-index: :100;
 }
 
-#videotext{
-	position: absolute;
-    top: -10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-html body {
-    background:#4169E1;
-}
-
-#sonar{
-	position: absolute;
-    top: 10%;
-    left: 130%;
-    transform: translate(-50%, -50%);
-}
-
-#sonaroutput{
-	position: absolute;
-    top: 20%;
-    left: 130%;
-    transform: translate(-50%, -50%);
-}
-
-#JSTRING{
+#centervid {
     position: absolute;
+    margin: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+#wheels {
 
 }
 
-#batteryPosition{
+#wheels-canvas {
+  background:#2B823A;
+  height:300px;
+  width:200px;
+  position:absolute;
+  top: 0%;
+  left: -40%;
+}
+
+fl {
+  background:#98bf21;
+  height:75px;
+  width:75px;
+  position:absolute;
+  top: 0%;
+  left: -40%;
+}
+
+fr {
+  background:#98bf21;
+  height:75px;
+  width:75px;
+  position:absolute;
+  top: 0%;
+  left: -17.7%;"
+}
+
+rl {
+  background:#98bf21;
+  height:75px;
+  width:75px;
+  position:absolute;
+  top: 61.4%;
+  left: -40%;"
+}
+
+rr {
+  background:#98bf21;
+  height:75px;
+  width:75px;
+  position:absolute;
+  top: 61.4%;
+  left: -17.7%;
+}
+
+#sonar-title{
+	  position: absolute;
+    top: 10%;
+    left: 130%;
+    transform: translate(-50%, -50%);
+    color: #B9F0B9;
+}
+
+#sonar-message {
+	  position: absolute;
+    top: 20%;
+    left: 130%;
+    transform: translate(-50%, -50%);
+    color:#B9F0B9;
+}
+
+
+#request {
     position: absolute;
     top: 100%;
     left: -23%;
     transform: translate(-50%, -50%);
 }
 
-#batteryPosition2{
-    position: absolute;
-    top: 100%;
-    left: -23%;
-    transform: translate(-50%, -50%);
+#brake-title {
+  position: absolute;
+  top: 60%;
+  left: 130%;
+  transform: translate(-50%, -50%);
 }
 
-#breaking{
+#brake-cog {
     position: absolute;
     top: 60%;
     left: 130%;
     transform: translate(-50%, -50%);
-
+    font-size:100px;
+    color:black;
 }
 
-#break{    
+#brake-message {
     position: absolute;
     top: 80%;
     left: 130%;
     transform: translate(-50%, -50%);
-
+    color:#B9F0B9;
 }
 
-#log{
+
+#logger-title {
     position: absolute;;
-    top: 95%;
+    top: 92%;
     left: 105%;
-    transform:translate(-50%, -50%);       
+    transform:translate(-50%, -50%);
+    color:#B9F0B9;
 }
 
-#loginfo{
+#logger-message {
     position: absolute;;
     top: 115%;
     left: 130%;
     transform:translate(-50%, -50%);
+    height:120px;
+    width:325px;
+    background-color:white;
+    border:1px solid black;
+    font:16px/26px Georgia, Garamond, Serif;
+    overflow:auto;
 }
 
+#stream-title{
+	  position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#B9F0B9
+}
+
+.notConnectedImage {
+    background:url(images/UofA.jpg) center;
+    background-size: 560px 360;
+}
+
+#group {
+    position: absolute;
+    margin: auto;
+    top: 120%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

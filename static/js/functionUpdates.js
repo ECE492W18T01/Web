@@ -1,271 +1,251 @@
+$( document ).ready(function() {
+  console.log( "Loading functionUpdates.js!" );
+  //var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
+  var apiURL = "http://localhost:3000/api/status/";
+  var requestFrequency = 0.2 / 1000;
+  var updateFrontEndFrequency = 0.2 / 1000;
 
-// drawing lines wheel to wheel making it look attached. 
-var c = document.getElementById("drawlines");
-var ctx = c.getContext("2d");
-ctx.beginPath();
-ctx.moveTo(15, 15);
-ctx.lineTo(190,15 );
-ctx.lineTo(150,15 );
-ctx.lineTo(150,140 );
-ctx.lineTo(15,140);
-ctx.lineTo(190,140);
-ctx.stroke();
+  var oldMessage = "";
+  var oldSteering = 0;
+  var state = 1;
 
-ctx.beginPath();
-ctx.moveTo(150, 15);
-ctx.lineTo(15,15);
-ctx.stroke();
+  var now = new Date();
+  var connectedMessage = "Connected.";
+  var offlineMessage = "Offline.";
+  var wheelColorSlipping = "#98bf21";
+  var wheelColorGood =  "#d9534f";
 
-ctx.beginPath();
-ctx.moveTo(150,140);
-ctx.lineTo(190,140);
-ctx.stroke();
+  var requestHandler;
+  var connectivityHandler;
+  var logHandler;
+  var steeringHandler;
+  var brakingHandler;
+  var sonarHandler;
+  var wheelFLHandler;
+  var wheelFRHandler;
+  var wheelRLHandler;
+  var wheelRRHandler;
 
-
-//ajax set up
-// The the url in the httpRequest.open is the crawler.com/api/get-crawler? then grab reponse text or obj (will change to
-// which ever
-
-//TODO make a button toggle to ask for 
-
-//var ResponseTimer = setInterval(getCrawler, 1000);
-var servoResponse = 0;
-var breakResponse = 0;
-var batteryResponse = 0; 
-var FLResponse = 0;
-var FRResponse = 0;
-var RLResponse = 0;
-var RRResponse = 0;
-var sonarResponse = 0 ;
-var connectedResponse = 0; 
-var commandsResponse = "";
-
-function getCrawler(){
-
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function (){
-		//might be this.readyState == 4 && this.status == 200 for the real thing.
-		//change to this.status for checking dummy test
-		if (this.readyState = 4 && this.status == 200)
-			
-			var crawler = JSON.parse(this.responseText);
-			// later parse response text; and place values into vars.
-			// assuming the parse will be similar to '{"battery": "value", "FL": "value" .... 
-			// will change parse names to w.e later
-			batteryResponse = crawler.battery;
-			FLResponse = crawler.wheels.fl;
-			FRResponse = crawler.wheels.fr;
-			RLResponse = crawler.wheels.rl;
-			RRResponse = crawler.wheels.rr;
-			sonarResponse = crawler.sonar;
-			connectedResponse = crawler.connected;
-			servoResponse = crawler.servo;
-			breakResponse = crawler.break;
-            commandsResponse = crawler.commands;
-			 
-		}
+  var crawler = {
+      "connected": 0,
+      "message": "Crawler not connected.",
+      "steering": 0,
+      "break": 0,
+      "sonar": 0,
+      "wheels": {
+        "fl": 0,
+        "fr": 0,
+        "rl": 0,
+        "rr": 0,
+      }
+    };
 
 
-	
-	xhttp.open("GET", "http://localhost:3000/api/status/", true);
-	xhttp.send();
-}
+  drawWheels();
 
-//Toggle the buttons to show, To see if we need to request or if we want to stop requesting
-function SwitchButtons(buttonId) {
-  var hideBtn, showBtn, menuToggle;
-  if (buttonId == 'batteryPosition') {
-    menuToggle = 'menu2';
-    showBtn = 'batteryPosition2';
-    hideBtn = 'batteryPosition';
-  } else {
-    menuToggle = 'menu3';
-    showBtn = 'batteryPosition';
-    hideBtn = 'batteryPosition2';
+
+
+  function run() {
+    console.log('Starting.');
+    requestHandler = setInterval(getCrawler, 1/requestFrequency);
+    connectivityHandler = setInterval(changeConnectedStatus, 1/updateFrontEndFrequency);
+    logHandler = setInterval(changeLogMessage, 1/updateFrontEndFrequency);
+    steeringHandler = setInterval(changeSteeringStatus, 1/updateFrontEndFrequency);
+    brakingHandler = setInterval(changeBrakingStatus, 1/updateFrontEndFrequency);
+    sonarHandler = setInterval(changeSonarStatus, 1/updateFrontEndFrequency);
+    wheelFLHandler = setInterval(changeWheelStatusFL, 1/updateFrontEndFrequency);
+    wheelFRHandler = setInterval(changeWheelStatusFR, 1/updateFrontEndFrequency);
+    wheelRLHandler = setInterval(changeWheelStatusRL, 1/updateFrontEndFrequency);
+    wheelRRHandler = setInterval(changeWheelStatusRR, 1/updateFrontEndFrequency);
   }
-  //I don't have your menus, so this is commented out.  just uncomment for your usage
-  // document.getElementById(menuToggle).toggle(); //step 1: toggle menu
-  document.getElementById(hideBtn).style.display = 'none'; //step 2 :additional feature hide button
-  document.getElementById(showBtn).style.display = ''; //step 3:additional feature show button
 
+  function end() {
+    console.log('Ending.');
+    clearInterval(requestHandler);
+    clearInterval(logHandler);
+    clearInterval(steeringHandler);
+    clearInterval(brakingHandler);
+    clearInterval(sonarHandler);
+    clearInterval(wheelFLHandler);
+    clearInterval(wheelFRHandler);
+    clearInterval(wheelRLHandler);
+    clearInterval(wheelRRHandler);
+  }
 
-}
-
-
-
-// Time function, connection, command log, moving or breaking
-var myVar = setInterval(myTimer, 500);
-var state = 1;
-var oldCommand = "";
-function myTimer() {
-    var d = new Date();
-    
-    document.getElementById("time").innerHTML = d.toLocaleTimeString();
-
-    if(commandsResponse != oldCommand){
-        document.getElementById("loginfo").innerHTML += commandsResponse+ "<br />";
-        document.getElementById("loginfo").scrollTop =  document.getElementById("loginfo").scrollHeight;
-        oldCommand = commandsResponse;
-    }   
-
-     if (connectedResponse == 1){
-        document.getElementById("JSTRING").innerHTML = "connected";
+  $('#request').click(function() {
+    if ($(this).hasClass('running')) {
+      end();
+      $(this).text('Connect');
+      $(this).removeClass('running');
+      $(this).removeClass('btn-warning');
+      $(this).addClass('btn-success');
+    } else {
+      run();
+      $(this).text('Disconnect');
+      $(this).addClass('running');
+      $(this).addClass('btn-warning');
+      $(this).removeClass('btn-success');
     }
+  });
 
-    else {
-        document.getElementById("JSTRING").innerHTML = "offline";
+  function drawWheels() {
+    // Drawing lines wheel to wheel making it look attached.
+    var c = document.getElementById("wheels-canvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(15, 15);
+    ctx.lineTo(190,15 );
+    ctx.lineTo(150,15 );
+    ctx.lineTo(150,140 );
+    ctx.lineTo(15,140);
+    ctx.lineTo(190,140);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(150, 15);
+    ctx.lineTo(15,15);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(150,140);
+    ctx.lineTo(190,140);
+    ctx.stroke();
+  }
+
+
+  function getCrawler(){
+    /*
+      AJAX request to Crawler API. Updates JSON Crawler variable.
+    */
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", apiURL, true);
+    xhttp.send();
+
+    xhttp.onreadystatechange = function (){
+      if (this.readyState == 4 && this.status == 200)
+        var responseData = JSON.parse(this.responseText);
+        console.log(responseData);
+        crawler = responseData.crawler;
+      }
+  }
+
+
+  function changeConnectedStatus() {
+    /*
+      Updates the connectivity status on the front end of the website.
+
+      status = Int, used to indicate connectivty of crawler.
+    */
+      if (crawler.connected == 1){
+         document.getElementById("connectivity").innerHTML = connectedMessage;
+      }
+      else {
+         document.getElementById("connectivity").innerHTML = offlineMessage;
+      }
+  }
+
+
+  function changeLogMessage() {
+    /*
+      Updates Log Message on front end.
+    */
+    document.getElementById("time").innerHTML = now.toLocaleTimeString();
+
+    if(crawler.message != oldMessage){
+        document.getElementById("logger-message").innerHTML += crawler.message+ "<br />";
+
+        /*
+        document.getElementById("logg-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
+        */
+        oldMessage = crawler.message;
     }
+  }
 
 
-    if(sonarResponse < 10){
-        state = 0;
-        document.getElementById("break").innerHTML = "Brake";
-        document.getElementsByClassName('fa fa-cog fa-spin')[0].classList.toggle("fa-spin");
-        
-    }
+  function changeSteeringStatus(){
+    /*
+      Animate steering from the Crawler.
 
-    else if(sonarResponse > 10 && state == 0){
-        state = 1;
-        document.getElementById("break").innerHTML = "Moving";
-        document.getElementsByClassName('fa fa-cog')[0].classList.toggle("fa-spin");
-      
-    }
-}
-
-
-
-
-
-//servo function
-var updateMotor = setInterval(changeMotorStatus, 1000);
-
-var old = 0;
-function changeMotorStatus(){
-
-	if(old != servoResponse){
-		if(servoResponse  == 1 ){
-			document.getElementById("fl").style.transform = "rotate("+20+"deg)";
-			document.getElementById("fr").style.transform = "rotate("+20+"deg)";
-  		}
-
-    	else if(servoResponse == 0){
-			document.getElementById("fl").style.transform = "rotate("+0+"deg)";
-			document.getElementById("fr").style.transform = "rotate("+0+"deg)";
-   		}
-
-    	else if(servoResponse == -1 ){
-			document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
-			document.getElementById("fr").style.transform = "rotate("+-20+"deg)";	
-	    }
-    	old = servoResponse;
-	}
-
-}
-
-
-// wheel function
-var wheelUpdate1 = setInterval(changeWheelStatus1, 500);
-var wheelUpdate2 = setInterval(changeWheelStatus2, 500);
-var wheelUpdate3 = setInterval(changeWheelStatus3, 500);
-var wheelUpdate4 = setInterval(changeWheelStatus4, 500);
-
-
-
-function changeWheelStatus1(){
-    var div = $("fl");
-    	if(FLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },{ duration: 100, queue: false });
-   		}	
-   		else{	
-        div.animate({ backgroundColor: "#d9534f", },{ duration: 100, queue: false });
+      steering - Int, latest steering status recieved.
+    */
+    if(oldSteering != crawler.steering){
+      if(crawler.steering  == 1 ){
+        document.getElementById("fl").style.transform = "rotate("+20+"deg)";
+        document.getElementById("fr").style.transform = "rotate("+20+"deg)";
         }
-}
 
-function changeWheelStatus2(){
-    var div = $("fr");
-    	if(FRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
-   		}	
-   		else{	
-        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
+        else if(crawler.steering == 0){
+        document.getElementById("fl").style.transform = "rotate("+0+"deg)";
+        document.getElementById("fr").style.transform = "rotate("+0+"deg)";
         }
-}
 
-function changeWheelStatus3(){
-    var div = $("rl");
-    	if(RLResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
-   		}	
-   		else{	
-        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
+        else if(crawler.steering == -1 ){
+        document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
+        document.getElementById("fr").style.transform = "rotate("+-20+"deg)";
         }
-}
-
-function changeWheelStatus4(){
-    var div = $("rr");
-    	if(RRResponse == 1){
-        div.animate({ backgroundColor: "#98bf21", },{ duration: 300, queue: false });
-   		}	
-   		else{	
-        div.animate({ backgroundColor: "#d9534f", },{ duration: 300, queue: false });
-        }
-}
+        oldSteering = crawler.steering;
+    }
+  }
 
 
+  function changeBrakingStatus() {
+    /*
+      Update displayed breaking status of crawler.
+    */
+    brakeMessage = $('#brake-message');
+    brakeCog = $('#brake-cog > i');
 
-// sonar function
-var sonarUpdate = setInterval(sonarFunction, 1000);
-function sonarFunction() {
-    document.getElementById("sonarStatus").innerHTML = sonarResponse.toString();
-  
-}
-
-
-//battery function
-/*
-var batteryUpdate = setInterval(batteryFunction, 1000);
-<i id="batteryPosition" class="fa fa-battery-4" style="font-size:80px;color:green;"></i>
-function batteryFunction(){
-	if(batteryResponse <= 80 && batteryResponse >60){
-		document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-3");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-3");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-3");    
-        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-3");
-        document.getElementById('batteryPosition').style.color = "green"
-
-	}
-	else if(batteryResponse <= 60 && batteryResponse >40 ){
-        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-2");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-2");
-	    document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-2");    
-		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-2");
-		document.getElementById('batteryPosition').style.color = "#ffff00"
-	}
-	else if(batteryResponse <= 40 && batteryResponse >20 ){
-        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-1");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-1");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-1");
-		document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-1");
-		document.getElementById('batteryPosition').style.color = "#ff0000"
-	}
-    // To be cautious: 
-    // made it look zero even at 20% because we should turn it off and charge it to avoid any problems.    
-	else if(batteryResponse <= 20 ){
-        document.getElementById('batteryPosition').classList.replace("fa-battery-4","fa-battery-0");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-0");
-	    document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-0");
-		document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-0");
-		document.getElementById('batteryPosition').style.color = "#000000"
-	}
-    else if(batteryResponse > 80 ){
-        document.getElementById('batteryPosition').classList.replace("fa-battery-3","fa-battery-4");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-2","fa-battery-4");
-        document.getElementById('batteryPosition').classList.replace("fa-battery-1","fa-battery-4");    
-        document.getElementById('batteryPosition').classList.replace("fa-battery-0","fa-battery-4");
-        document.getElementById('batteryPosition').style.color = "green"
+    if(crawler.brake < 10){
+        oldSonarState = 0;
+        brakeMessage.text = "Brake Activated.";
+        brakeCog.toggleClass();
     }
 
-}*/
+    else if(crawler.brake > 10 && oldSonarState == 0){
+        oldSonarState = 1;
+        brakeMessage.text = "Moving."
+        brakeCog.toggleClass();
+    }
+  }
 
 
+  function changeSonarStatus() {
+    /*
+      Change sonar string displayed on frontend.
+    */
+    $('#sonar-title').text = crawler.sonar
+  }
 
+
+  function changeWheelStatus(wheel, status){
+    /*
+        Changes wheel display corresponsding to status.
+
+        wheel - String, wheel identifier. ex. "fl"
+        status - Int, current status of the wheel. ex. 1
+    */
+      if(status == 1){
+        $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: 100, queue: false });
+      }
+      else{
+        $(wheel).animate({ backgroundColor: wheelColorSlipping, },{ duration: 100, queue: false });
+      }
+  }
+
+  function changeWheelStatusFL() {
+    changeWheelStatus("fl", crawler.wheels.fl);
+  }
+
+  function changeWheelStatusFR() {
+    changeWheelStatus("fr", crawler.wheels.fr);
+  }
+
+  function changeWheelStatusRL() {
+    changeWheelStatus("rl", crawler.wheels.rl);
+  }
+
+  function changeWheelStatusRR() {
+    changeWheelStatus("rr", crawler.wheels.rr);
+  }
+
+});
