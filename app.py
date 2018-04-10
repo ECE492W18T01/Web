@@ -23,6 +23,10 @@ status = {
 def index():
     return render_template('index.html')
 
+@app.route('/stream/')
+def stream():
+    return render_template('test.html')
+
 @app.route('/api/')
 def api_home():
     return render_template('api.html')
