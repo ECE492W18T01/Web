@@ -17,7 +17,7 @@ html body {
    left:90%;
 }
 .btn-success{
-  background:#D4251C;
+  background:#D4251C !important;
 }
 
 #connectivity {
