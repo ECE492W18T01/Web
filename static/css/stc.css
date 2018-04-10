@@ -16,6 +16,9 @@ html body {
    top:80%;
    left:90%;
 }
+.btn-success{
+  background:#D4251C;
+}
 
 #connectivity {
     color:#D46A6A;
