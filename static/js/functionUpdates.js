@@ -26,14 +26,12 @@ $( document ).ready(function() {
   var wheelFRHandler;
   var wheelRLHandler;
   var wheelRRHandler;
-
-  var temp;
-
+  
   var crawler = {
       "connected": 0,
       "message": "Crawler not connected.",
       "steering": -1,
-      "brake": 8,
+      "brake": 12,
       "sonar": 12,
       "wheels": {
         "fl": 0,
@@ -63,6 +61,12 @@ $( document ).ready(function() {
   }
 
   function end() {
+   
+    $('#sonar-message').text("N/A");
+    brakeMessage.text("-");
+      brakeCog.removeClass("fa-spin");
+    oldBrakeState = 0;
+
     console.log('Ending.');
     clearInterval(requestHandler);
     clearInterval(logHandler);
@@ -73,7 +77,7 @@ $( document ).ready(function() {
     clearInterval(wheelFRHandler);
     clearInterval(wheelRLHandler);
     clearInterval(wheelRRHandler);
-  }
+     }
 
   $('#request').click(function() {
     if ($(this).hasClass('running')) {
@@ -130,9 +134,10 @@ $( document ).ready(function() {
         document.getElementById("connectivity").innerHTML = "inside loop";
         var responseData = JSON.parse(this.responseText);
         console.log(responseData);
-        temp = responseData.crawler;
+        crawler = responseData.crawler;
       }
-    
+
+
     xhttp.open("GET", "http://localhost:3000/api/status/", true);
     xhttp.send();
 
@@ -207,13 +212,13 @@ $( document ).ready(function() {
     if(crawler.brake < 10 && oldBrakeState != crawler.brake){
         oldBrakeState = crawler.brake;
         brakeMessage.text("Stopping");
-        brakeCog.toggleClass("fa-spin");
+        brakeCog.removeClass("fa-spin");
     }
 
     else if(crawler.brake > 10 && oldBrakeState != crawler.brake){
         oldBrakeState = crawler.brake;
-        brakeMessage.text("Moving.")
-        brakeCog.toggleClass("fa-spin");
+        brakeMessage.text("Moving.");
+        brakeCog.addClass("fa-spin");    
     }
   }
 
