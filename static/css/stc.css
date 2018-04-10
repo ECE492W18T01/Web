@@ -1,5 +1,5 @@
 html body {
-    background:#4169E1;
+    background:#FFF;
 }
 
 #title {
@@ -46,7 +46,7 @@ html body {
 }
 
 #wheels-canvas {
-  background:#4169E1;
+  background:#FFF;
   height:300px;
   width:200px;
   position:absolute;

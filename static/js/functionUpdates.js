@@ -224,11 +224,12 @@ $( document ).ready(function() {
 				wheel - String, wheel identifier. ex. "fl"
 				status - Int, current status of the wheel. ex. 1
 		*/
+			rate = 100;
 	    if(status == 1){
-	      $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: 100, queue: false });
+	      $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: rate, queue: false });
 	   	}
 	   	else{
-	    	$(wheel).animate({ backgroundColor: wheelColorSlipping, },{ duration: 100, queue: false });
+	    	$(wheel).animate({ backgroundColor: wheelColorSlipping, },{ duration: rate, queue: false });
 	    }
 	}
 
