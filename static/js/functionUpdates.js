@@ -2,14 +2,14 @@ $( document ).ready(function() {
   console.log( "Loading functionUpdates.js!" );
   //var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
   var apiURL = "http://localhost:3000/api/status/";
-  var requestFrequency = 0.2 / 1000;
-  var updateFrontEndFrequency = 0.2 / 1000;
+  var requestFrequency = 0.001;
+  var updateFrontEndFrequency = 0.0001;
 
   var oldMessage = "";
   var oldSteering = 0;
   var state = 1;
 
-  var now = new Date();
+
   var connectedMessage = "Connected.";
   var offlineMessage = "Offline.";
   var wheelColorSlipping = "#98bf21";
@@ -26,6 +26,8 @@ $( document ).ready(function() {
   var wheelRLHandler;
   var wheelRRHandler;
 
+  var temp;
+
   var crawler = {
       "connected": 0,
       "message": "Crawler not connected.",
@@ -34,29 +36,30 @@ $( document ).ready(function() {
       "sonar": 0,
       "wheels": {
         "fl": 0,
-        "fr": 0,
+        "fr": 1,
         "rl": 0,
-        "rr": 0,
+        "rr": 1,
       }
     };
 
 
   drawWheels();
 
+  requestHandler = setInterval(getCrawler, 100);
 
 
   function run() {
     console.log('Starting.');
-    requestHandler = setInterval(getCrawler, 1/requestFrequency);
-    connectivityHandler = setInterval(changeConnectedStatus, 1/updateFrontEndFrequency);
-    logHandler = setInterval(changeLogMessage, 1/updateFrontEndFrequency);
-    steeringHandler = setInterval(changeSteeringStatus, 1/updateFrontEndFrequency);
-    brakingHandler = setInterval(changeBrakingStatus, 1/updateFrontEndFrequency);
-    sonarHandler = setInterval(changeSonarStatus, 1/updateFrontEndFrequency);
-    wheelFLHandler = setInterval(changeWheelStatusFL, 1/updateFrontEndFrequency);
-    wheelFRHandler = setInterval(changeWheelStatusFR, 1/updateFrontEndFrequency);
-    wheelRLHandler = setInterval(changeWheelStatusRL, 1/updateFrontEndFrequency);
-    wheelRRHandler = setInterval(changeWheelStatusRR, 1/updateFrontEndFrequency);
+
+    //connectivityHandler = setInterval(changeConnectedStatus, 100);
+    logHandler = setInterval(changeLogMessage, 100);
+    steeringHandler = setInterval(changeSteeringStatus, 100);
+    brakingHandler = setInterval(changeBrakingStatus, 100);
+    sonarHandler = setInterval(changeSonarStatus, 100);
+    wheelFLHandler = setInterval(changeWheelStatusFL, 100);
+    wheelFRHandler = setInterval(changeWheelStatusFR, 100);
+    wheelRLHandler = setInterval(changeWheelStatusRL, 100);
+    wheelRRHandler = setInterval(changeWheelStatusRR, 100);
   }
 
   function end() {
@@ -118,24 +121,30 @@ $( document ).ready(function() {
       AJAX request to Crawler API. Updates JSON Crawler variable.
     */
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", apiURL, true);
-    xhttp.send();
+ 
+
+    document.getElementById("connectivity").innerHTML = xhttp.status;
 
     xhttp.onreadystatechange = function (){
       if (this.readyState == 4 && this.status == 200)
+        document.getElementById("connectivity").innerHTML = "inside loop";
         var responseData = JSON.parse(this.responseText);
         console.log(responseData);
-        crawler = responseData.crawler;
+        temp = responseData.crawler;
       }
+    
+    xhttp.open("GET", "http://localhost:3000/api/status/", true);
+    xhttp.send();
+
   }
 
-
+/*
   function changeConnectedStatus() {
     /*
       Updates the connectivity status on the front end of the website.
 
       status = Int, used to indicate connectivty of crawler.
-    */
+    
       if (crawler.connected == 1){
          document.getElementById("connectivity").innerHTML = connectedMessage;
       }
@@ -143,12 +152,13 @@ $( document ).ready(function() {
          document.getElementById("connectivity").innerHTML = offlineMessage;
       }
   }
-
+*/
 
   function changeLogMessage() {
     /*
       Updates Log Message on front end.
     */
+    var now = new Date(); 
     document.getElementById("time").innerHTML = now.toLocaleTimeString();
 
     if(crawler.message != oldMessage){
