@@ -7,7 +7,7 @@ status = {
     "crawler": {
         "connected": 0,
         "message": "Crawler not connected.",
-        "servo": 0,
+        "steering": 0,
         "brake": 0,
         "sonar": 0,
         "wheels": {

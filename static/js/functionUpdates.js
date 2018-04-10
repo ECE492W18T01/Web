@@ -30,14 +30,14 @@ $( document ).ready(function() {
 	var crawler = {
 	    "connected": 0,
 	    "message": "Crawler not connected.",
-	    "steering": 1,
+	    "steering": 0,
 	    "break": 0,
-	    "sonar": 12,
+	    "sonar": 0,
 	    "wheels": {
 	      "fl": 0,
-	      "fr": 1,
+	      "fr": 0,
 	      "rl": 0,
-	      "rr": 1,
+	      "rr": 0,
 			}
 	  };
 

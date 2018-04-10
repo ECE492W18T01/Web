@@ -12,7 +12,7 @@
 
 <body>
 <div id="centervid">
-<div id= "topcenter" class="container p-3 mb-2 bg-dark" style="height:140px;width:1010px;",>
+<div id= "topcenter" class="container" style="height:140px;width:1010px;",>
 	<h1 id="title">Smart Tank Crawler</h1>
 	<input type="button" class="btn btn-success" value="Check out our Github!" onclick="location.href = 'https://github.com/ECE492W18T01';">
 	<img src="/static/images/githublogo.png" width="100" height="30">
@@ -32,11 +32,11 @@
 
   <div id="sonar">
     <h2 id="sonar-title">Sonar</h2>
-  	<h2 id="sonar-message">0</h2>
+  	<h2 id="sonar-message">N/A</h2>
   </div>
   <div id="brake">
-    <div id="brake-cog"><i class="fa fa-cog fa-spin" ></i></div>
-    <h2 id="brake-message">0</h2>
+    <div id="brake-cog"><i class="fa fa-cog" ></i></div>
+    <h2 id="brake-message">-</h2>
   <div>
 	<div id="logger">
     <h2 id="logger-title">Log</h2>
@@ -44,7 +44,7 @@
   </div>
   <div id="stream">
     <h2 id="stream-title">Video Feed</h2>
-    <div id="stream-video" class="notConnectedImage"><iframe src="http://localhost:8000/stream.mjpg" height="360" width="560">
+    <div id="stream-video" class="notConnectedImage"><iframe src="http://localhost:8000/stream.mjpg" height="360" width="560" style="width:100%, height:100%">
 </iframe></div>
     <div id="group"><img src="/static/images/picture.jpg" height="155" width="560"></div>
   </div>

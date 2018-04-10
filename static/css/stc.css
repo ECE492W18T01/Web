@@ -180,7 +180,7 @@ rr {
 }
 
 .notConnectedImage {
-    background:url(images/UofA.jpg) center;
+    background:url(/static/images/UofA.jpg) center;
     background-size: 560px 360;
 }
 
