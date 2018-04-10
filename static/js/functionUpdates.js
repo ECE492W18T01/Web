@@ -34,7 +34,7 @@ $( document ).ready(function() {
       "message": "Crawler not connected.",
       "steering": -1,
       "brake": 8,
-      "sonar": 0,
+      "sonar": 12,
       "wheels": {
         "fl": 0,
         "fr": 1,
@@ -211,7 +211,7 @@ $( document ).ready(function() {
     }
 
     else if(crawler.brake > 10 && oldBrakeState != crawler.brake){
-        oldBrakeState = 1;
+        oldBrakeState = crawler.brake;
         brakeMessage.text("Moving.")
         brakeCog.toggleClass("fa-spin");
     }
@@ -222,7 +222,7 @@ $( document ).ready(function() {
     /*
       Change sonar string displayed on frontend.
     */
-    $('#sonar-title').text = crawler.sonar
+    $('#sonar-message').text(crawler.sonar);
   }
 
 
