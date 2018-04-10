@@ -8,6 +8,7 @@ $( document ).ready(function() {
   var oldMessage = "";
   var oldSteering = 0;
   var state = 1;
+  var oldBrakeState = 0;
 
 
   var connectedMessage = "Connected.";
@@ -31,8 +32,8 @@ $( document ).ready(function() {
   var crawler = {
       "connected": 0,
       "message": "Crawler not connected.",
-      "steering": 0,
-      "break": 0,
+      "steering": -1,
+      "brake": 8,
       "sonar": 0,
       "wheels": {
         "fl": 0,
@@ -45,13 +46,12 @@ $( document ).ready(function() {
 
   drawWheels();
 
-  requestHandler = setInterval(getCrawler, 100);
 
 
   function run() {
     console.log('Starting.');
-
-    //connectivityHandler = setInterval(changeConnectedStatus, 100);
+    requestHandler = setInterval(getCrawler, 100);
+    connectivityHandler = setInterval(changeConnectedStatus, 100);
     logHandler = setInterval(changeLogMessage, 100);
     steeringHandler = setInterval(changeSteeringStatus, 100);
     brakingHandler = setInterval(changeBrakingStatus, 100);
@@ -138,13 +138,13 @@ $( document ).ready(function() {
 
   }
 
-/*
+
   function changeConnectedStatus() {
     /*
       Updates the connectivity status on the front end of the website.
 
       status = Int, used to indicate connectivty of crawler.
-    
+    */
       if (crawler.connected == 1){
          document.getElementById("connectivity").innerHTML = connectedMessage;
       }
@@ -152,7 +152,7 @@ $( document ).ready(function() {
          document.getElementById("connectivity").innerHTML = offlineMessage;
       }
   }
-*/
+
 
   function changeLogMessage() {
     /*
@@ -161,12 +161,11 @@ $( document ).ready(function() {
     var now = new Date(); 
     document.getElementById("time").innerHTML = now.toLocaleTimeString();
 
-    if(crawler.message != oldMessage){
+    if(crawler.message ){
         document.getElementById("logger-message").innerHTML += crawler.message+ "<br />";
 
-        /*
-        document.getElementById("logg-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
-        */
+        document.getElementById("logger-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
+        
         oldMessage = crawler.message;
     }
   }
@@ -205,16 +204,16 @@ $( document ).ready(function() {
     brakeMessage = $('#brake-message');
     brakeCog = $('#brake-cog > i');
 
-    if(crawler.brake < 10){
-        oldSonarState = 0;
-        brakeMessage.text = "Brake Activated.";
-        brakeCog.toggleClass();
+    if(crawler.brake < 10 && oldBrakeState != crawler.brake){
+        oldBrakeState = crawler.brake;
+        brakeMessage.text("Stopping");
+        brakeCog.toggleClass("fa-spin");
     }
 
-    else if(crawler.brake > 10 && oldSonarState == 0){
-        oldSonarState = 1;
-        brakeMessage.text = "Moving."
-        brakeCog.toggleClass();
+    else if(crawler.brake > 10 && oldBrakeState != crawler.brake){
+        oldBrakeState = 1;
+        brakeMessage.text("Moving.")
+        brakeCog.toggleClass("fa-spin");
     }
   }
 
