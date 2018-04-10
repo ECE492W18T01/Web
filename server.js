@@ -17,9 +17,9 @@ var status = {
     "brake": 0,
     "sonar": 0,
     "wheels": {
-      "fl": 0,
+      "fl": 1,
       "fr": 0,
-      "rl": 0,
+      "rl": 1,
       "rr": 0
     }
   }

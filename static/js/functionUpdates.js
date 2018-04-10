@@ -3,14 +3,14 @@ $( document ).ready(function() {
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
 	var apiURL = "http://localhost:3000/api/status/";
 	var streamURL = "http://192.168.1.100:8000/stream.mjpg";
-	var requestFrequency = 0.2 / 1000;
-	var updateFrontEndFrequency = 0.2 / 1000;
+	var requestFrequency = 0.001;
+	var updateFrontEndFrequency = 0.001;
 
 	var oldMessage = "";
 	var oldSteering = 0;
 	var state = 1;
+	var oldBrakeState = 0;
 
-	var now = new Date();
 	var connectedMessage = "Connected.";
 	var offlineMessage = "Offline.";
 	var wheelColorSlipping = "#98bf21";
@@ -30,14 +30,14 @@ $( document ).ready(function() {
 	var crawler = {
 	    "connected": 0,
 	    "message": "Crawler not connected.",
-	    "steering": 0,
+	    "steering": 1,
 	    "break": 0,
-	    "sonar": 0,
+	    "sonar": 12,
 	    "wheels": {
 	      "fl": 0,
-	      "fr": 0,
+	      "fr": 1,
 	      "rl": 0,
-	      "rr": 0,
+	      "rr": 1,
 			}
 	  };
 
@@ -61,6 +61,13 @@ $( document ).ready(function() {
 	}
 
 	function end() {
+		document.getElementById("connectivity").innerHTML = offlineMessage;
+    	$('#sonar-message').text("N/A");
+    	brakeMessage.text("-");
+    	brakeCog.removeClass("fa-spin");
+    	oldBrakeState = 0;
+
+
 		console.log('Ending.');
 		clearInterval(requestHandler);
 		clearInterval(logHandler);
@@ -165,16 +172,16 @@ $( document ).ready(function() {
 		/*
 			Updates Log Message on front end.
 		*/
-	  document.getElementById("time").innerHTML = now.toLocaleTimeString();
+		var now = new Date();
+	  	document.getElementById("time").innerHTML = now.toLocaleTimeString();
 
-	  if(crawler.message != oldMessage){
-	      document.getElementById("logger-message").innerHTML += crawler.message+ "<br />";
+	  	if(crawler.message != oldMessage){
+	    		document.getElementById("logger-message").innerHTML += crawler.message+ "<br />";
 
-				/*
-	      document.getElementById("logg-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
-				*/
-	      oldMessage = crawler.message;
-	  }
+				document.getElementById("logger-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
+				
+	     	 oldMessage = crawler.message;
+	 	 }
 	}
 
 
@@ -204,32 +211,32 @@ $( document ).ready(function() {
 	}
 
 
-	function changeBrakingStatus() {
-		/*
-			Update displayed breaking status of crawler.
-		*/
-		brakeMessage = $('#brake-message');
-		brakeCog = $('#brake-cog > i');
+	 function changeBrakingStatus() {
+    /*
+      Update displayed breaking status of crawler.
+    */
+    brakeMessage = $('#brake-message');
+    brakeCog = $('#brake-cog > i');
 
-		if(crawler.brake < 10){
-				oldSonarState = 0;
-				brakeMessage.text = "Brake Activated.";
-				brakeCog.toggleClass();
-		}
+    if(crawler.brake < 10 && oldBrakeState != crawler.brake){
+        oldBrakeState = crawler.brake;
+        brakeMessage.text("Stopping");
+        brakeCog.removeClass("fa-spin");
+    }
 
-		else if(crawler.brake > 10 && oldSonarState == 0){
-				oldSonarState = 1;
-				brakeMessage.text = "Moving."
-				brakeCog.toggleClass();
-		}
-	}
+    else if(crawler.brake > 10 && oldBrakeState != crawler.brake){
+        oldBrakeState = crawler.brake;
+        brakeMessage.text("Moving.");
+        brakeCog.addClass("fa-spin");    
+    }
+  }
 
 
 	function changeSonarStatus() {
 		/*
 			Change sonar string displayed on frontend.
 		*/
-		$('#sonar-title').text = crawler.sonar
+		$('#sonar-message').text(crawler.sonar);
 	}
 
 
