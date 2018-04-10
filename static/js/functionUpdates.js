@@ -26,15 +26,15 @@ $( document ).ready(function() {
   var wheelFRHandler;
   var wheelRLHandler;
   var wheelRRHandler;
-  
+
   var crawler = {
-      "connected": 0,
+      "connected": 1,
       "message": "Crawler not connected.",
       "steering": -1,
       "brake": 12,
       "sonar": 12,
       "wheels": {
-        "fl": 0,
+        "fl": 1,
         "fr": 1,
         "rl": 0,
         "rr": 1,
@@ -61,10 +61,13 @@ $( document ).ready(function() {
   }
 
   function end() {
-   
+    /*
+      Reset most things to initial state
+    */
+    document.getElementById("connectivity").innerHTML = offlineMessage;
     $('#sonar-message').text("N/A");
     brakeMessage.text("-");
-      brakeCog.removeClass("fa-spin");
+    brakeCog.removeClass("fa-spin");
     oldBrakeState = 0;
 
     console.log('Ending.');
@@ -128,7 +131,6 @@ $( document ).ready(function() {
  
 
     document.getElementById("connectivity").innerHTML = xhttp.status;
-
     xhttp.onreadystatechange = function (){
       if (this.readyState == 4 && this.status == 200)
         document.getElementById("connectivity").innerHTML = "inside loop";
@@ -239,10 +241,10 @@ $( document ).ready(function() {
         status - Int, current status of the wheel. ex. 1
     */
       if(status == 1){
-        $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: 100, queue: false });
+        $(wheel).animate({ backgroundColor: wheelColorSlipping, },{ duration: 100, queue: false });
       }
       else{
-        $(wheel).animate({ backgroundColor: wheelColorSlipping, },{ duration: 100, queue: false });
+        $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: 100, queue: false });
       }
   }
 
