@@ -35,12 +35,12 @@ app.use(express.static('static'));
 
 app.get('/', function(req, res) {
   /** Homepage */
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 app.get('/api/', function(req, res) {
   /** Homepage */
-  res.sendFile(path.join(__dirname + '/public/api.html'));
+  res.sendFile(path.join(__dirname + '/views/api.html'));
 });
 
 app.post('/api/update/', function(req, res) {

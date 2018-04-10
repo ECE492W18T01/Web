@@ -2,6 +2,7 @@ $( document ).ready(function() {
 	console.log( "Loading functionUpdates.js!" );
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
 	var apiURL = "http://localhost:3000/api/status/";
+	var streamURL = "http://192.168.1.100:8000/stream.mjpg";
 	var requestFrequency = 0.2 / 1000;
 	var updateFrontEndFrequency = 0.2 / 1000;
 
@@ -40,7 +41,7 @@ $( document ).ready(function() {
 			}
 	  };
 
-
+	getStream();
 	drawWheels();
 
 
@@ -126,6 +127,21 @@ $( document ).ready(function() {
 				var responseData = JSON.parse(this.responseText);
 				console.log(responseData);
 				crawler = responseData.crawler;
+			}
+	}
+
+	function getStream(){
+		/*
+			AJAX request to Crawler API. Updates JSON Crawler variable.
+		*/
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", streamURL, true);
+		xhttp.send();
+
+		xhttp.onreadystatechange = function (){
+			if (this.readyState == 4 && this.status == 200)
+				var responseData = this;
+				console.log(responseData);
 			}
 	}
 
