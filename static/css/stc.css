@@ -1,24 +1,24 @@
 html body {
-    background:#2B823A;
+    background:#AA3939;
 }
 
 .container{
-  background:#10621E ;
+  background:#801515 ;
 }
 
 #title {
-  color:#B9F0B9;
+  color:#D46A6A;
 }
 
 #time {
    position:absolute;
-   color:#B9F0B9;
+   color:#D46A6A;
    top:80%;
    left:90%;
 }
 
 #connectivity {
-    color:#B9F0B9;
+    color:#D46A6A;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -50,7 +50,7 @@ html body {
 }
 
 #wheels-canvas {
-  background:#2B823A;
+  background:#AA3939;
   height:300px;
   width:200px;
   position:absolute;
@@ -99,7 +99,7 @@ rr {
     top: 10%;
     left: 130%;
     transform: translate(-50%, -50%);
-    color: #B9F0B9;
+    color: #D46A6A;
 }
 
 #sonar-message {
@@ -107,7 +107,7 @@ rr {
     top: 20%;
     left: 130%;
     transform: translate(-50%, -50%);
-    color:#B9F0B9;
+    color:#D46A6A;
 }
 
 
@@ -139,7 +139,7 @@ rr {
     top: 80%;
     left: 130%;
     transform: translate(-50%, -50%);
-    color:#B9F0B9;
+    color:#D46A6A;
 }
 
 
@@ -148,7 +148,7 @@ rr {
     top: 92%;
     left: 105%;
     transform:translate(-50%, -50%);
-    color:#B9F0B9;
+    color:#D46A6A;
 }
 
 #logger-message {
@@ -169,7 +169,7 @@ rr {
     top: -10%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color:#B9F0B9
+    color:#D46A6A
 }
 
 .notConnectedImage {
