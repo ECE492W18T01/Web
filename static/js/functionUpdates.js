@@ -41,7 +41,7 @@ $( document ).ready(function() {
 			}
 	  };
 
-	getStream();
+
 	drawWheels();
 
 
@@ -137,21 +137,6 @@ $( document ).ready(function() {
 			}
 	}
 
-	function getStream(){
-		/*
-			AJAX request to Crawler API. Updates JSON Crawler variable.
-		*/
-		var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", streamURL, true);
-		xhttp.send();
-
-		xhttp.onreadystatechange = function (){
-			if (this.readyState == 4 && this.status == 200)
-				var responseData = this;
-				console.log(responseData);
-			}
-	}
-
 
 	function changeConnectedStatus() {
 		/*
@@ -179,7 +164,7 @@ $( document ).ready(function() {
 	    		document.getElementById("logger-message").innerHTML += crawler.message+ "<br />";
 
 				document.getElementById("logger-message").scrollTop =  document.getElementById("logger-message").scrollHeight;
-				
+
 	     	 oldMessage = crawler.message;
 	 	 }
 	}
@@ -227,7 +212,7 @@ $( document ).ready(function() {
     else if(crawler.brake > 10 && oldBrakeState != crawler.brake){
         oldBrakeState = crawler.brake;
         brakeMessage.text("Moving.");
-        brakeCog.addClass("fa-spin");    
+        brakeCog.addClass("fa-spin");
     }
   }
 

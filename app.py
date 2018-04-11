@@ -25,7 +25,7 @@ def index():
 
 @app.route('/stream/')
 def stream():
-    return render_template('test.html')
+    return render_template('stream.html')
 
 @app.route('/api/')
 def api_home():
