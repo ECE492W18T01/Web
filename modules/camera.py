@@ -16,8 +16,8 @@ class Camera(threading.Thread):
 
     def run(self):
         with PiCamera() as picamera:
-            picamera.resolution = (640, 480)
-            picamera.framerate = 30
+            picamera.resolution = (160, 120)
+            picamera.framerate = 15
             picamera.rotation = 270
             picamera.hflip = False
             picamera.vflip = False
