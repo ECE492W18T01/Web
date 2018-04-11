@@ -127,6 +127,7 @@ $( document ).ready(function() {
 			AJAX request to Crawler API. Updates JSON Crawler variable.
 		*/
 		var xhttp = new XMLHttpRequest();
+		console.log(apiURL);
 		xhttp.open("GET", apiURL, true);
 		xhttp.send();
 
