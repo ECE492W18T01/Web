@@ -44,8 +44,8 @@
   </div>
   <div id="stream">
     <h2 id="stream-title">Video Feed</h2>
-    <div id="stream-video" class="notConnectedImage"><iframe src="http://localhost:8000/stream.mjpg" height="360" width="560" style="width:100%, height:100%">
-</iframe></div>
+    <div id="stream-video" class="notConnectedImage">
+	<img height="360" width="560" src="{{ url_for('stream_v2') }}">
     <div id="group"><img src="/static/images/picture.jpg" height="155" width="560"></div>
   </div>
 </div>

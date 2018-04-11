@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, Response, make_response
 from modules.camera import Camera
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app_port = 3000
 status = {
     "crawler": {
         "connected": 0,
-        "message": "Crawler not connected.",
+        "message": "Crawler not connected..",
         "steering": 0,
         "brake": 0,
         "sonar": 0,
@@ -34,7 +34,11 @@ def api_home():
 
 @app.route('/api/status/')
 def api_status():
-    return jsonify(status)
+    response = make_response(jsonify(status))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Content-Type'] = 'application/json'
+    print(response)
+    return response
 
 @app.route('/api/update/')
 def api_update():
@@ -48,19 +52,19 @@ def stream_index():
 def gen(camera):
     while True:
         frame = camera.get_frame()
-        yield(b'--frame\r\n'
-              b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\')
+        if frame is not None:
+            yield(b'--frame\r\n' + b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route('/stream/v2')
 def stream_v2():
-    stream_mime = 'multipart/x-mixed-replace; boundary=frame')
+    stream_mime = 'multipart/x-mixed-replace; boundary=frame'
     camera = Camera()
     camera.start()
-    return Response(gen(), mimetype=stream_mime)
+    return Response(gen(camera), mimetype=stream_mime)
 
 
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0', port=app_port)
+    app.run(host='0.0.0.0', port=app_port, threaded=True)

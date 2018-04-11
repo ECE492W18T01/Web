@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 	console.log( "Loading functionUpdates.js!" );
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
-	var piIP = "http://192.168.1.100"
+	var piIP = "http://192.168.1.100:"
 	var piPort = 3000
 	var apiURL = piIP + piPort + "/api/status/";
 	var requestFrequency = 0.001;
@@ -127,6 +127,7 @@ $( document ).ready(function() {
 			AJAX request to Crawler API. Updates JSON Crawler variable.
 		*/
 		var xhttp = new XMLHttpRequest();
+		console.log(apiURL);
 		xhttp.open("GET", apiURL, true);
 		xhttp.send();
 

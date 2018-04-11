@@ -3,11 +3,9 @@ import socket
 import struct
 from time import sleep
 from picamera import PiCamera
-from streaming_client import StreamingClient
-from frame import Frame
+import threading
 
-
-class Camera(object, threading.Thread):
+class Camera(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -20,12 +18,15 @@ class Camera(object, threading.Thread):
         with PiCamera() as picamera:
             picamera.resolution = (640, 480)
             picamera.framerate = 30
+            picamera.rotation = 270
+            picamera.hflip = False
+            picamera.vflip = False
             try:
-                for frame in camera.capture_continuous(self.stream, self.format, use_video_port=True):
+                for frame in picamera.capture_continuous(self.stream, self.format, use_video_port=True):
                         self.stream.seek(0)
                         self.frame = self.stream.read()
                         self.stream.seek(0)
-                        stream.truncate()
+                        self.stream.truncate()
             finally:
                 print('Stream has ended.')
 
