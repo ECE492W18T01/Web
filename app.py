@@ -23,8 +23,8 @@ status = {
 def index():
     return render_template('index.html')
 
-@app.route('/stream/')
-def stream():
+@app.route('/stream/v1')
+def stream_v1():
     return render_template('stream.html')
 
 @app.route('/api/')
@@ -38,6 +38,19 @@ def api_status():
 @app.route('/api/update/')
 def api_update():
     return 200
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield(b'--frame\r\n'
+              b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\')
+        
+
+@app.route('/stream/v2')
+def stream_v2():
+    stream_mime = 'multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(Camera()), mimetype=stream_mime)
+           
 
 
 if __name__ == "__main__":
