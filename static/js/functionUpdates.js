@@ -261,6 +261,7 @@ $( document ).ready(function() {
 
 	function changeWheelStatusFL() {
 		changeWheelStatus("fl", crawler.motors.fl);
+		console.log(crawler.motors.fl);
 	}
 
 	function changeWheelStatusFR() {
