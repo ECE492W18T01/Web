@@ -1,8 +1,9 @@
 $( document ).ready(function() {
 	console.log( "Loading functionUpdates.js!" );
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
-	var apiURL = "http://localhost:3000/api/status/";
-	var streamURL = "http://192.168.1.100:8000/stream.mjpg";
+	var piIP = "http://192.168.1.100"
+	var piPort = 3000
+	var apiURL = piIP + piPort + "/api/status/";
 	var requestFrequency = 0.001;
 	var updateFrontEndFrequency = 0.001;
 
