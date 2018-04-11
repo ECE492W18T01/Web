@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify, Response, make_response
+from flask import Flask, render_template, jsonify, Response, make_response, request
 from modules.camera import Camera
+import json
 
 app = Flask(__name__)
 app_port = 3000
@@ -32,7 +33,7 @@ def stream_v1():
 def api_home():
     return render_template('api.html')
 
-@app.route('/api/status/')
+@app.route('/api/status/', methods=['GET'])
 def api_status():
     response = make_response(jsonify(status))
     response.headers['Access-Control-Allow-Origin'] = '*'
@@ -40,9 +41,13 @@ def api_status():
     print(response)
     return response
 
-@app.route('/api/update/')
+@app.route('/api/update/', methods=['POST'])
 def api_update():
-    return 200
+    if request.method == 'POST':
+        data = request.data.decode()
+        data_dict = json.loads(data)
+        crawler = data_dict['crawlerStatus']
+    return make_response(data)
 
 @app.route('/stream/')
 def stream_index():
