@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify
+from modules.camera import Camera
 
 app = Flask(__name__)
 app_port = 3000
@@ -39,18 +40,25 @@ def api_status():
 def api_update():
     return 200
 
+@app.route('/stream/')
+def stream_index():
+    return render_template('stream2.html')
+
+
 def gen(camera):
     while True:
         frame = camera.get_frame()
         yield(b'--frame\r\n'
               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\')
-        
+
 
 @app.route('/stream/v2')
 def stream_v2():
     stream_mime = 'multipart/x-mixed-replace; boundary=frame')
-    return Response(gen(Camera()), mimetype=stream_mime)
-           
+    camera = Camera()
+    camera.start()
+    return Response(gen(), mimetype=stream_mime)
+
 
 
 if __name__ == "__main__":
