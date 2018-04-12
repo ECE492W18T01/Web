@@ -194,7 +194,7 @@ $( document ).ready(function() {
 
 			steering - Int, latest steering status recieved.
 		*/
-		if(oldSteering != crawler.steering){
+		if(oldSteering != crawler.motors.steering){
 			if(crawler.motors.steering  == 1 ){
 				document.getElementById("fl").style.transform = "rotate("+20+"deg)";
 				document.getElementById("fr").style.transform = "rotate("+20+"deg)";
@@ -209,7 +209,7 @@ $( document ).ready(function() {
 				document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
 				document.getElementById("fr").style.transform = "rotate("+-20+"deg)";
 		    }
-	    	oldSteering = crawler.steering;
+	    	oldSteering = crawler.motors.steering;
 		}
 	}
 
