@@ -29,18 +29,34 @@ $( document ).ready(function() {
 	var wheelRRHandler;
 
 	var crawler = {
-	    "connected": 0,
-	    "message": "Crawler not connected.",
-	    "steering": 0,
-	    "break": 0,
-	    "sonar": 0,
-	    "wheels": {
-	      "fl": 0,
-	      "fr": 0,
-	      "rl": 0,
-	      "rr": 0,
-			}
-	  };
+    'connected' : True,
+    'message' : "Crawler not connected.",
+    'brake' : 0,
+    'distance' : 0,
+    'last_updated': None,
+    'motors' : {
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0
+    },
+    'sensors' : {
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0,
+    },
+    'fuzzy' : {
+        'enabled': 0,
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0,
+    }
+};
 
 
 	drawWheels();
@@ -135,7 +151,7 @@ $( document ).ready(function() {
 			if (this.readyState == 4 && this.status == 200)
 				var responseData = JSON.parse(this.responseText);
 				console.log(responseData);
-				crawler = responseData.crawler;
+				crawler = responseData;
 			}
 	}
 
@@ -146,7 +162,7 @@ $( document ).ready(function() {
 
 			status = Int, used to indicate connectivty of crawler.
 		*/
-			if (crawler.connected == 1){
+			if (crawler.connected == True){
 				 document.getElementById("connectivity").innerHTML = connectedMessage;
 			}
 			else {
@@ -179,17 +195,17 @@ $( document ).ready(function() {
 			steering - Int, latest steering status recieved.
 		*/
 		if(oldSteering != crawler.steering){
-			if(crawler.steering  == 1 ){
+			if(crawler.motors.steering  == 1 ){
 				document.getElementById("fl").style.transform = "rotate("+20+"deg)";
 				document.getElementById("fr").style.transform = "rotate("+20+"deg)";
 	  		}
 
-	    	else if(crawler.steering == 0){
+	    	else if(crawler.motors.steering == 0){
 				document.getElementById("fl").style.transform = "rotate("+0+"deg)";
 				document.getElementById("fr").style.transform = "rotate("+0+"deg)";
 	   		}
 
-	    	else if(crawler.steering == -1 ){
+	    	else if(crawler.motors.steering == -1 ){
 				document.getElementById("fl").style.transform = "rotate("+-20+"deg)";
 				document.getElementById("fr").style.transform = "rotate("+-20+"deg)";
 		    }
@@ -223,7 +239,7 @@ $( document ).ready(function() {
 		/*
 			Change sonar string displayed on frontend.
 		*/
-		$('#sonar-message').text(crawler.sonar);
+		$('#sonar-message').text(crawler.distance);
 	}
 
 
@@ -244,19 +260,19 @@ $( document ).ready(function() {
 	}
 
 	function changeWheelStatusFL() {
-		changeWheelStatus("fl", crawler.wheels.fl);
+		changeWheelStatus("fl", crawler.motors.fl);
 	}
 
 	function changeWheelStatusFR() {
-		changeWheelStatus("fr", crawler.wheels.fr);
+		changeWheelStatus("fr", crawler.motors.fr);
 	}
 
 	function changeWheelStatusRL() {
-		changeWheelStatus("rl", crawler.wheels.rl);
+		changeWheelStatus("rl", crawler.motors.rl);
 	}
 
 	function changeWheelStatusRR() {
-		changeWheelStatus("rr", crawler.wheels.rr);
+		changeWheelStatus("rr", crawler.motors.rr);
 	}
 
 });
