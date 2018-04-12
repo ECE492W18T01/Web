@@ -29,11 +29,11 @@ $( document ).ready(function() {
 	var wheelRRHandler;
 
 	var crawler = {
-    'connected' : True,
+    'connected' : 1,
     'message' : "Crawler not connected.",
     'brake' : 0,
     'distance' : 0,
-    'last_updated': None,
+    'last_updated': "",
     'motors' : {
         'fl' : 0,
         'fr' : 0,
@@ -151,7 +151,7 @@ $( document ).ready(function() {
 			if (this.readyState == 4 && this.status == 200)
 				var responseData = JSON.parse(this.responseText);
 				console.log(responseData);
-				crawler = responseData;
+				crawler = responseData.crawler;
 			}
 	}
 
@@ -162,7 +162,7 @@ $( document ).ready(function() {
 
 			status = Int, used to indicate connectivty of crawler.
 		*/
-			if (crawler.connected == True){
+			if (crawler.connected == 1){
 				 document.getElementById("connectivity").innerHTML = connectedMessage;
 			}
 			else {
