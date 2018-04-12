@@ -6,18 +6,32 @@ app = Flask(__name__)
 app_port = 3000
 
 status = {
-    "crawler": {
-        "connected": 0,
-        "message": "Crawler not connected..",
-        "steering": 0,
-        "brake": 0,
-        "sonar": 0,
-        "wheels": {
-          "fl": 0,
-          "fr": 0,
-          "rl": 0,
-          "rr": 0
-        }
+    'connected' : True,
+    'message' : "Crawler not connected.",
+    'brake' : 0,
+    'distance' : 0,
+    'last_updated': None,
+    'motors' : {
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0
+    },
+    'sensors' : {
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0,
+    },
+    'fuzzy' : {
+        'enabled': 0,
+        'fl' : 0,
+        'fr' : 0,
+        'rl' : 0,
+        'rr' : 0,
+        'steering' : 0,
     }
 }
 
@@ -46,7 +60,7 @@ def api_update():
     if request.method == 'POST':
         data = request.data.decode()
         data_dict = json.loads(data)
-        crawler = data_dict['crawlerStatus']
+        crawler = data_dict['status']
     return make_response(data)
 
 @app.route('/stream/')
