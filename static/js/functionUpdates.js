@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 	console.log( "Loading functionUpdates.js!" );
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
-	var piIP = "http://192.168.1.101:"
+	var piIP = "http://192.168.0.15:"
 	var piPort = 3000
 	var apiURL = piIP + piPort + "/api/status/";
 	var requestFrequency = 0.001;
