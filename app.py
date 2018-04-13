@@ -1,3 +1,12 @@
+'''
+
+Creation date: March 1, 2018
+
+Created by Steven Lagrange
+
+
+code to start the sever, creation of the status component variable to be sent online
+'''
 from flask import Flask, render_template, jsonify, Response, make_response, request
 from modules.camera import Camera
 import json
