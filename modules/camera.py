@@ -1,3 +1,11 @@
+'''
+Creation date: March 1, 2018
+
+Created by Steven Lagrange
+Modified by Steven Lagrange
+
+Raspberry pi camera setup for streaming
+'''
 from io import BytesIO
 import socket
 import struct
