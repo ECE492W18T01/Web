@@ -1,3 +1,14 @@
+/*
+Creation date: March 1, 2018
+
+Created by Fredric Mendi
+Modified by Steven Lagrange
+
+Javascript /jquery functions to update HTML components and stream video feed 
+*/
+
+
+
 $( document ).ready(function() {
 	console.log( "Loading functionUpdates.js!" );
 	//var api_url = "http://crawler-api.us-west-2.elasticbeanstalk.com/api/status/";
