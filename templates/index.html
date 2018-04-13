@@ -9,9 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 -->
-  <link rel="stylesheet" href="/static/css/font.css">
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/css/cog.css">
   <link rel="stylesheet" href="/static/css/jquery.css">
   <link rel="stylesheet" href="/static/css/stc.css">
 </head>
@@ -51,7 +49,7 @@
   <div id="stream">
     <h2 id="stream-title">Video Feed</h2>
     <div id="stream-video" class="notConnectedImage">
-	<img height="360" width="560" src="{{ url_for('stream_v2') }}">
+	<img height="360" width="560" src="{{ url_for('stream') }}">
     <div id="group"><img src="/static/images/picture.jpg" height="155" width="560"></div>
   </div>
 </div>

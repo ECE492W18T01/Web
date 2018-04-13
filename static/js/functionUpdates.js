@@ -251,6 +251,7 @@ $( document ).ready(function() {
 				status - Int, current status of the wheel. ex. 1
 		*/
 			rate = 100;
+            console.log(status);
 	    if(status == 1){
 	      $(wheel).animate({ backgroundColor: wheelColorGood, },{ duration: rate, queue: false });
 	   	}

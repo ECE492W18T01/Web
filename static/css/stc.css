@@ -139,6 +139,7 @@ rr {
     transform: translate(-50%, -50%);
     font-size:100px;
     color:black;
+    display: Hidden;
 }
 
 #brake-message {

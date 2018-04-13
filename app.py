@@ -5,6 +5,10 @@ import json
 app = Flask(__name__)
 app_port = 3000
 
+'''
+Holds the initial status of the crawler.
+This dictionary is updated with the latest crawler information as it is passed to the API.
+'''
 status = {
     'crawler' : {
         'connected' : 1,
@@ -23,8 +27,7 @@ status = {
             'fl' : 0,
             'fr' : 0,
             'rl' : 0,
-            'rr' : 0,
-            'steering' : 0,
+            'rr' : 0
         },
         'fuzzy' : {
             'enabled': 0,
@@ -32,25 +35,24 @@ status = {
             'fr' : 0,
             'rl' : 0,
             'rr' : 0,
-            'steering' : 0,
+            'steering' : 0
         }
     }
 }
 
 @app.route('/')
 def index():
+    ''' Renders the home page of the site. '''
     return render_template('index.html')
-
-@app.route('/stream/v1')
-def stream_v1():
-    return render_template('stream.html')
 
 @app.route('/api/')
 def api_home():
+    ''' Loads the API description page. '''
     return render_template('api.html')
 
 @app.route('/api/status/', methods=['GET'])
 def api_status():
+    ''' Returns the latest crawler status object. '''
     response = make_response(jsonify(status))
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Content-Type'] = 'application/json'
@@ -59,27 +61,25 @@ def api_status():
 
 @app.route('/api/update/', methods=['POST'])
 def api_update():
+    ''' Checks if a POST method is recieved and then decodes the recieved JSON data. '''
     if request.method == 'POST':
         data = request.data.decode()
         data_dict = json.loads(data)
         status['crawler'] = data_dict['crawler']
-        print(status['crawler'])
     return make_response(data)
-
-@app.route('/stream/')
-def stream_index():
-    return render_template('stream2.html')
 
 
 def gen(camera):
+    ''' Returns the latest frame from the camera as part of a multipart response. '''
     while True:
         frame = camera.get_frame()
         if frame is not None:
             yield(b'--frame\r\n' + b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
-@app.route('/stream/v2')
-def stream_v2():
+@app.route('/stream/')
+def stream():
+    ''' Sets the stream response headers and calls the frame generator function. ''' 
     stream_mime = 'multipart/x-mixed-replace; boundary=frame'
     camera = Camera()
     camera.start()
