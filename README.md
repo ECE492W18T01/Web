@@ -10,14 +10,11 @@ Client accessible website for monitoring the Smart Tank Crawler.
 git clone https://github.com/ECEw18T01/RaspberryPi
 ```
 
-2. Install dependencies using npm:
-``` bash
-npm install
-```
+2. Install python 3+:
 
 3. Start server:
 ``` bash
-node server.js
+py(or python3) app.py
 ```
 
-4. Access the website via an internet browser. The default address is 'your_ip:8080'.
+4. Access the website via an internet browser. 
